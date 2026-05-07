@@ -1,22 +1,40 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-    <title>sayid restuarent </title>
+    <title>Sayid's Restaurant</title>
+    <link rel="stylesheet" href="{% static 'menu/style.css' %}">
 </head>
 <body>
-<h1> welcome</h1>
-<p> best food in hargeisa</p>
 
-<h2>our menu</h2>
-<ul>
-<li> suqaar - 5.33</li>
-<li> hilib - 10.43</li>
-<li> kalaankal - 5.13</li>
+<header>
+    <h1>🍕 Sayid's Restaurant</h1>
+    <p>Best food in Mogadishu!</p>
+</header>
 
-</ul>
+<div class="menu">
+    <h2>Our Menu</h2>
 
+    <div class="menu-item">
+        <span>🍔 Burger</span>
+        <span class="price">$5</span>
+    </div>
+
+    <div class="menu-item">
+        <span>🍕 Pizza</span>
+        <span class="price">$8</span>
+    </div>
+
+    <div class="menu-item">
+        <span>🍝 Pasta</span>
+        <span class="price">$6</span>
+    </div>
+
+    <div class="menu-item">
+        <span>🥤 Juice</span>
+        <span class="price">$2</span>
+    </div>
+</div>
 
 </body>
-
-
 </html>
