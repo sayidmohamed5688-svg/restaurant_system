@@ -10,15 +10,19 @@ def order(request):
         item = request.POST.get('item', '')
         quantity = request.POST.get('quantity', 1)
         
-        Order.objects.create(
+        new_order = Order.objects.create(
             customer_name=customer_name,
             item=item,
             quantity=quantity
         )
-        return redirect('home')
+        return redirect('receipt', pk=new_order.pk)
     
     return render(request, 'menu/order.html')
 
 def all_orders(request):
     orders = Order.objects.all()
     return render(request, 'menu/all_orders.html', {'orders': orders})
+
+def receipt(request, pk):
+    order = Order.objects.get(pk=pk)
+    return render(request, 'menu/receipt.html', {'order': order})
