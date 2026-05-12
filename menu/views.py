@@ -45,3 +45,11 @@ def edit_order(request, pk):
         return redirect('all_orders')
     
     return render(request, 'menu/edit_order.html', {'order': order})
+
+def search(request):
+    query = request.GET.get('q', '')
+    results = Order.objects.filter(customer_name__icontains=query)
+    return render(request, 'menu/search.html', {
+        'results': results,
+        'query': query
+    })
