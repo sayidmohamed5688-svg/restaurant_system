@@ -26,3 +26,22 @@ def all_orders(request):
 def receipt(request, pk):
     order = Order.objects.get(pk=pk)
     return render(request, 'menu/receipt.html', {'order': order})
+
+def delete_order(request, pk):
+    order = Order.objects.get(pk=pk)
+    order.delete()
+    return redirect('all_orders')
+
+
+
+def edit_order(request, pk):
+    order = Order.objects.get(pk=pk)
+    
+    if request.method == 'POST':
+        order.customer_name = request.POST.get('customer_name', '')
+        order.item = request.POST.get('item', '')
+        order.quantity = request.POST.get('quantity', 1)
+        order.save()
+        return redirect('all_orders')
+    
+    return render(request, 'menu/edit_order.html', {'order': order})
