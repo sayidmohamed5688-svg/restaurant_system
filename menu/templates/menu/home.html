@@ -9,10 +9,18 @@
 <nav class="navbar navbar-dark bg-danger">
     <div class="container">
         <a class="navbar-brand fw-bold">🍕 Sayid's Restaurant</a>
-        <a href="/" class="btn btn-light">Home</a>
+        <div>
+            {% if request.user.is_authenticated %}
+                <span class="text-white me-3">
+                    👤 {{ request.user.username }}
+                </span>
+                <a href="/logout/" class="btn btn-light btn-sm">Logout</a>
+            {% else %}
+                <a href="/login/" class="btn btn-light btn-sm">Login</a>
+            {% endif %}
+        </div>
     </div>
 </nav>
-
 <div class="container mt-5">
     <h2 class="mb-4">Place Your Order</h2>
 
