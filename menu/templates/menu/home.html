@@ -9,33 +9,14 @@
 
 <h3 class="mt-4 mb-3">Our Menu</h3>
 
+{% for item in menu_items %}
 <div class="card mb-3">
     <div class="card-body d-flex justify-content-between">
-        <span>🍔 Burger</span>
-        <span class="text-danger fw-bold">$5</span>
+        <span>{{ item.name }}</span>
+        <span class="text-danger fw-bold">${{ item.price }}</span>
     </div>
 </div>
-
-<div class="card mb-3">
-    <div class="card-body d-flex justify-content-between">
-        <span>🍕 Pizza</span>
-        <span class="text-danger fw-bold">$8</span>
-    </div>
-</div>
-
-<div class="card mb-3">
-    <div class="card-body d-flex justify-content-between">
-        <span>🍝 Pasta</span>
-        <span class="text-danger fw-bold">$6</span>
-    </div>
-</div>
-
-<div class="card mb-3">
-    <div class="card-body d-flex justify-content-between">
-        <span>🥤 Juice</span>
-        <span class="text-danger fw-bold">$2</span>
-    </div>
-</div>
+{% endfor %}
 
 <div class="mt-4">
     <a href="/order/" class="btn btn-danger btn-lg me-2">Place Order 🛒</a>

@@ -1,11 +1,14 @@
+
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Order
+from .models import Order, MenuItem
 
 def home(request):
-    return render(request, 'menu/home.html')
+    menu_items = MenuItem.objects.filter(available=True)
+    return render(request, 'menu/home.html', {'menu_items': menu_items})
 
 def order(request):
+    menu_items = MenuItem.objects.filter(available=True)
     if request.method == 'POST':
         customer_name = request.POST.get('customer_name', '')
         item = request.POST.get('item', '')
@@ -16,8 +19,7 @@ def order(request):
             quantity=quantity
         )
         return redirect('receipt', pk=new_order.pk)
-    return render(request, 'menu/order.html')
-
+    return render(request, 'menu/order.html', {'menu_items': menu_items})
 @login_required
 def all_orders(request):
     orders = Order.objects.all()

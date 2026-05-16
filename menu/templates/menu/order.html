@@ -17,10 +17,9 @@
     <div class="mb-3">
         <label>Select Item</label>
         <select class="form-select" name="item">
-            <option>🍔 Burger - $5</option>
-            <option>🍕 Pizza - $8</option>
-            <option>🍝 Pasta - $6</option>
-            <option>🥤 Juice - $2</option>
+            {% for item in menu_items %}
+            <option value="{{ item.name }}">{{ item.name }} - ${{ item.price }}</option>
+            {% endfor %}
         </select>
     </div>
 
