@@ -123,3 +123,7 @@ STATICFILES_DIRS = [
 ]
 LOGIN_URL = '/login/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://restaurantsystem-production-51c8.up.railway.app'
+]
