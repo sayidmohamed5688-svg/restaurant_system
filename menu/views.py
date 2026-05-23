@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Order, MenuItem
 from .models import Order, MenuItem, Category
+from .models import Order, MenuItem, Category, Table
 
 
 def home(request):
@@ -55,3 +56,7 @@ def search(request):
         'results': results,
         'query': query
     })
+@login_required
+def waiter_dashboard(request):
+    tables = Table.objects.filter(waiter=request.user)
+    return render(request, 'menu/waiter_dashboard.html', {'tables': tables})

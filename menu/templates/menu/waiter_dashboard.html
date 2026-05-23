@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Waiter Dashboard{% endblock %}
+
+{% block content %}
+
+<h2 class="mb-4">Welcome {{ request.user.username }}! 👋</h2>
+<h4 class="mb-4">Your Tables</h4>
+
+<div class="row">
+{% for table in tables %}
+<div class="col-md-2 mb-3">
+    <div class="card text-center 
+        {% if table.is_busy %}bg-danger text-white{% else %}bg-success text-white{% endif %}">
+        <div class="card-body">
+            <h3>{{ table.number }}</h3>
+            <p>{% if table.is_busy %}Busy{% else %}Free{% endif %}</p>
+            <a href="/take-order/{{ table.number }}/" 
+               class="btn btn-light btn-sm">
+                Take Order
+            </a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+</div>
+
+{% endblock %}
