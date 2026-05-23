@@ -1,9 +1,7 @@
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from .models import Order, MenuItem
-from .models import Order, MenuItem, Category
-from .models import Order, MenuItem, Category, Table
+from .models import Order, MenuItem, Category, Table, OrderItem
 
 
 def home(request):
@@ -23,6 +21,7 @@ def order(request):
         )
         return redirect('receipt', pk=new_order.pk)
     return render(request, 'menu/order.html', {'menu_items': menu_items})
+
 @login_required
 def all_orders(request):
     orders = Order.objects.all()
@@ -56,7 +55,87 @@ def search(request):
         'results': results,
         'query': query
     })
-@login_required
+
 def waiter_dashboard(request):
-    tables = Table.objects.filter(waiter=request.user)
-    return render(request, 'menu/waiter_dashboard.html', {'tables': tables})
+    from django.contrib.auth.models import User
+    waiters = User.objects.filter(
+        username__in=['gadhyac', 'faro', 'sakriye', 
+                      'cabdi_xasan', 'shine', 'sakariye_mxmed']
+    )
+    return render(request, 'menu/waiter_dashboard.html', {'waiters': waiters})
+
+def waiter_tables(request, username):
+    from django.contrib.auth.models import User
+    waiter = User.objects.get(username=username)
+    tables = Table.objects.filter(waiter=waiter)
+    return render(request, 'menu/waiter_tables.html', {
+        'tables': tables,
+        'waiter': waiter
+    })
+
+def take_order(request, table_number):
+    from django.contrib.auth.models import User
+    table = Table.objects.get(number=table_number)
+    categories = Category.objects.all()
+    menu_items = MenuItem.objects.filter(available=True)
+    
+    # Get waiter from URL parameter
+    waiter_username = request.GET.get('waiter', '')
+    waiter = None
+    if waiter_username:
+        try:
+            waiter = User.objects.get(username=waiter_username)
+        except:
+            pass
+    
+    if request.method == 'POST':
+        customer_name = request.POST.get('customer_name', '')
+        payment_method = request.POST.get('payment_method', 'cash')
+        waiter_username = request.POST.get('waiter_username', '')
+        
+        try:
+            waiter = User.objects.get(username=waiter_username)
+        except:
+            waiter = None
+        
+        new_order = Order.objects.create(
+            customer_name=customer_name,
+            item='Multiple Items',
+            quantity=1,
+            table=table,
+            waiter=waiter,
+            payment_method=payment_method,
+            total_price=0
+        )
+        
+        total = 0
+        item_ids = request.POST.getlist('item_ids')
+        quantities = request.POST.getlist('quantities')
+        
+        for item_id, qty in zip(item_ids, quantities):
+            qty = int(qty)
+            if qty > 0:
+                menu_item = MenuItem.objects.get(id=item_id)
+                subtotal = menu_item.price * qty
+                total += subtotal
+                OrderItem.objects.create(
+                    order=new_order,
+                    menu_item=menu_item,
+                    quantity=qty,
+                    price=menu_item.price
+                )
+        
+        new_order.total_price = total
+        new_order.save()
+        
+        table.is_busy = True
+        table.save()
+        
+        return redirect('receipt', pk=new_order.pk)
+    
+    return render(request, 'menu/take_order.html', {
+        'table': table,
+        'categories': categories,
+        'menu_items': menu_items,
+        'waiter': waiter
+    })

@@ -4,23 +4,18 @@
 
 {% block content %}
 
-<h2 class="mb-4">Welcome {{ request.user.username }}! 👋</h2>
-<h4 class="mb-4">Your Tables</h4>
+<h2 class="mb-4 text-center">👋 Select Your Name</h2>
 
-<div class="row">
-{% for table in tables %}
-<div class="col-md-2 mb-3">
-    <div class="card text-center 
-        {% if table.is_busy %}bg-danger text-white{% else %}bg-success text-white{% endif %}">
-        <div class="card-body">
-            <h3>{{ table.number }}</h3>
-            <p>{% if table.is_busy %}Busy{% else %}Free{% endif %}</p>
-            <a href="/take-order/{{ table.number }}/" 
-               class="btn btn-light btn-sm">
-                Take Order
-            </a>
+<div class="row justify-content-center">
+{% for waiter in waiters %}
+<div class="col-md-4 mb-3">
+    <a href="/waiter/{{ waiter.username }}/" class="text-decoration-none">
+        <div class="card text-center p-4 hover-card">
+            <h1>👤</h1>
+            <h4>{{ waiter.username }}</h4>
+            <p class="text-muted">Click to see your tables</p>
         </div>
-    </div>
+    </a>
 </div>
 {% endfor %}
 </div>
