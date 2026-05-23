@@ -2,10 +2,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Order, MenuItem
+from .models import Order, MenuItem, Category
+
 
 def home(request):
-    menu_items = MenuItem.objects.filter(available=True)
-    return render(request, 'menu/home.html', {'menu_items': menu_items})
+    categories = Category.objects.all()
+    return render(request, 'menu/home.html', {'categories': categories})
 
 def order(request):
     menu_items = MenuItem.objects.filter(available=True)
