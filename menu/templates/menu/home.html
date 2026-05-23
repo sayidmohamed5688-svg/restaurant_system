@@ -4,19 +4,30 @@
 
 {% block content %}
 
-<h2 class="mb-4">Welcome to Sayid moohammed ali Restaurant! 🍕</h2>
-<p class="fs-5">Best food in hargeisa</p>
+<h2 class="mb-4">Welcome to Sayid's Restaurant! 🍕</h2>
+<p class="fs-5">Best food in Mogadishu!</p>
 
 <h3 class="mt-4 mb-3">Our Menu</h3>
 
+<div class="row">
 {% for item in menu_items %}
-<div class="card mb-3">
-    <div class="card-body d-flex justify-content-between">
-        <span>{{ item.name }}</span>
-        <span class="text-danger fw-bold">${{ item.price }}</span>
+<div class="col-md-4 mb-4">
+    <div class="card h-100">
+        {% if item.image %}
+        <img src="{{ item.image.url }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+        {% else %}
+        <div class="bg-secondary text-white text-center p-5">
+            <h1>🍽️</h1>
+        </div>
+        {% endif %}
+        <div class="card-body d-flex justify-content-between">
+            <span class="fw-bold">{{ item.name }}</span>
+            <span class="text-danger fw-bold">${{ item.price }}</span>
+        </div>
     </div>
 </div>
 {% endfor %}
+</div>
 
 <div class="mt-4">
     <a href="/order/" class="btn btn-danger btn-lg me-2">Place Order 🛒</a>
