@@ -4,16 +4,6 @@ from menu import views
 from accounts import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
-from django.contrib.auth.models import User
-from django.http import HttpResponse
-
-def create_waiters(request):
-    waiters = ['gadhyac', 'faro', 'sakriye', 'cabdi_xasan', 'shine', 'sakariye_mxmed']
-    for w in waiters:
-        if not User.objects.filter(username=w).exists():
-            User.objects.create_user(username=w, password='waiter1234')
-    return HttpResponse('Waiters created!')
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,7 +20,4 @@ urlpatterns = [
     path('dashboard/', views.waiter_dashboard, name='waiter_dashboard'),
     path('take-order/<int:table_number>/', views.take_order, name='take_order'),
     path('waiter/<str:username>/', views.waiter_tables, name='waiter_tables'),
-    path('create-waiters/', create_waiters),
-    
-
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
