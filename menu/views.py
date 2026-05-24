@@ -139,3 +139,9 @@ def take_order(request, table_number):
         'menu_items': menu_items,
         'waiter': waiter
     })
+def mark_table_free(request, table_number):
+    table = Table.objects.get(number=table_number)
+    table.is_busy = False
+    table.save()
+    waiter_username = request.GET.get('waiter', '')
+    return redirect(f'/waiter/{waiter_username}/')

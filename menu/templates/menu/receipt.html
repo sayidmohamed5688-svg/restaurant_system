@@ -58,10 +58,13 @@
     </div>
 
     <div class="text-center mt-4 d-flex gap-2 justify-content-center">
-        <button onclick="window.print()" class="btn btn-success">Print 🖨️</button>
-        <a href="/waiter/{{ order.waiter }}/" class="btn btn-primary">New Order</a>
-        <a href="/dashboard/" class="btn btn-dark">Dashboard</a>
-    </div>
+    <button onclick="window.print()" class="btn btn-success">Print 🖨️</button>
+    <a href="/table-free/{{ order.table.number }}/?waiter={{ order.waiter }}" 
+       class="btn btn-warning">
+        Mark Table Free ✅
+    </a>
+    <a href="/dashboard/" class="btn btn-dark">Dashboard</a>
+</div>
 
 </div>
 </div>

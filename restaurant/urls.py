@@ -20,4 +20,5 @@ urlpatterns = [
     path('dashboard/', views.waiter_dashboard, name='waiter_dashboard'),
     path('take-order/<int:table_number>/', views.take_order, name='take_order'),
     path('waiter/<str:username>/', views.waiter_tables, name='waiter_tables'),
+    path('table-free/<int:table_number>/', views.mark_table_free, name='mark_table_free'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
