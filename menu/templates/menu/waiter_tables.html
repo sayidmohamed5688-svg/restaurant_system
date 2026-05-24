@@ -10,13 +10,11 @@
 <div class="row">
 {% for table in tables %}
 <div class="col-md-2 mb-3">
-    <div class="card text-center 
-        {% if table.is_busy %}bg-danger text-white{% else %}bg-success text-white{% endif %}">
+    <div class="card text-center {% if table.is_busy %}bg-danger text-white{% else %}bg-success text-white{% endif %}">
         <div class="card-body">
             <h3>{{ table.number }}</h3>
             <p>{% if table.is_busy %}Busy 🔴{% else %}Free 🟢{% endif %}</p>
-            <a href="/take-order/{{ table.number }}/?waiter={{ waiter.username }}" 
-               class="btn btn-light btn-sm">
+            <a href="/take-order/{{ table.number }}/?waiter={{ waiter.username }}" class="btn btn-light btn-sm">
                 Take Order
             </a>
         </div>
@@ -26,4 +24,7 @@
 </div>
 
 <div class="mt-4">
-    <a href="/dashboard
+    <a href="/dashboard/" class="btn btn-dark">← Back to Waiters</a>
+</div>
+
+{% endblock %}
