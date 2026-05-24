@@ -23,4 +23,27 @@
                 🍽️
             </div>
             {% endif %}
-            <div c
+            <div class="card-body p-3">
+                <h6 class="fw-bold">{{ item.name }}</h6>
+                <p class="mb-0" style="color: #c0392b; font-weight: 600; font-size: 18px;">${{ item.price }}</p>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
+{% endfor %}
+
+<div class="text-center mt-5">
+    <a href="/dashboard/" class="btn btn-primary btn-lg me-3">
+        Waiter Dashboard 👤
+    </a>
+    <a href="/orders/" class="btn btn-warning btn-lg me-3">
+        All Orders 📋
+    </a>
+    <a href="/search/" class="btn btn-dark btn-lg">
+        Search 🔍
+    </a>
+</div>
+
+{% endblock %}
