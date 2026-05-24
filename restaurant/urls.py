@@ -6,6 +6,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.models import User
 from django.http import HttpResponse
+from menu.models import Table
 
 def create_waiters(request):
     waiters = ['gadhyac', 'faro', 'sakriye', 'cabdi_xasan', 'shine', 'sakariye_mxmed']
@@ -13,6 +14,26 @@ def create_waiters(request):
         if not User.objects.filter(username=w).exists():
             User.objects.create_user(username=w, password='waiter1234')
     return HttpResponse('Waiters created!')
+
+def assign_tables(request):
+    gadhyac = User.objects.get(username='gadhyac')
+    faro = User.objects.get(username='faro')
+    sakriye = User.objects.get(username='sakriye')
+    cabdi = User.objects.get(username='cabdi_xasan')
+    shine = User.objects.get(username='shine')
+    sakariye = User.objects.get(username='sakariye_mxmed')
+
+    waiter_map = {1: gadhyac, 2: faro, 3: sakriye, 4: cabdi, 5: shine, 6: sakariye}
+
+    for table in Table.objects.all():
+        remainder = table.number % 10
+        if remainder == 0:
+            remainder = 10
+        if remainder <= 6:
+            table.waiter = waiter_map[remainder]
+            table.save()
+
+    return HttpResponse('Tables assigned!')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,4 +51,5 @@ urlpatterns = [
     path('take-order/<int:table_number>/', views.take_order, name='take_order'),
     path('waiter/<str:username>/', views.waiter_tables, name='waiter_tables'),
     path('create-waiters/', create_waiters),
+    path('assign-tables/', assign_tables),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
