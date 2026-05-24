@@ -1,22 +1,30 @@
 {% extends 'base.html' %}
 
-{% block title %}Receipt — Sayid's Restaurant{% endblock %}
+{% block title %}Receipt{% endblock %}
 
 {% block content %}
 
-<div class="card p-4" style="max-width: 500px; margin: auto;">
+<div class="row justify-content-center">
+<div class="col-md-6">
+<div class="card p-4">
     
-    <h2 class="text-center fw-bold text-danger">🧾 Receipt</h2>
+    <div class="text-center mb-3">
+        <h2 style="font-family:'Playfair Display',serif; color:#c0392b;">🍽️ Sayid's Restaurant</h2>
+        <p class="text-muted">Mogadishu, Somalia</p>
+        <hr>
+        <h4 class="fw-bold">🧾 Receipt</h4>
+    </div>
+    
+    <div class="mb-3">
+        <p><strong>Customer:</strong> {{ order.customer_name }}</p>
+        <p><strong>Table:</strong> {{ order.table }}</p>
+        <p><strong>Waiter:</strong> {{ order.waiter }}</p>
+        <p><strong>Date:</strong> {{ order.date|date:"d M Y, H:i" }}</p>
+        <p><strong>Payment:</strong> {{ order.get_payment_method_display }}</p>
+    </div>
+    
     <hr>
-    
-    <p><strong>Customer:</strong> {{ order.customer_name }}</p>
-    <p><strong>Table:</strong> {{ order.table }}</p>
-    <p><strong>Waiter:</strong> {{ order.waiter }}</p>
-    <p><strong>Date:</strong> {{ order.date }}</p>
-    <p><strong>Payment:</strong> {{ order.get_payment_method_display }}</p>
-    
-    <hr>
-    <h5>Items Ordered:</h5>
+    <h6 class="fw-bold mb-3">Items Ordered:</h6>
     
     <table class="table table-sm">
         <thead>
@@ -24,7 +32,7 @@
                 <th>Item</th>
                 <th>Qty</th>
                 <th>Price</th>
-                <th>Subtotal</th>
+                <th>Total</th>
             </tr>
         </thead>
         <tbody>
@@ -40,20 +48,23 @@
     </table>
     
     <hr>
-    <h4 class="text-end text-danger">
-        Total: ${{ order.total_price }}
-    </h4>
+    <div class="text-end">
+        <h4 style="color:#c0392b;">Total: ${{ order.total_price }}</h4>
+    </div>
     <hr>
     
-    <h4 class="text-center text-danger">Thank you! Come again! 🙏</h4>
-    <hr>
-
-    <div class="text-center mt-3">
-        <button onclick="window.print()" class="btn btn-success me-2">Print 🖨️</button>
-        <a href="/dashboard/" class="btn btn-danger me-2">Dashboard</a>
-        <a href="/orders/" class="btn btn-dark">All Orders</a>
+    <div class="text-center p-3" style="background:#fff3e0; border-radius:12px;">
+        <h5 style="color:#c0392b;">Thank you! Come again! 🙏</h5>
     </div>
 
+    <div class="text-center mt-4 d-flex gap-2 justify-content-center">
+        <button onclick="window.print()" class="btn btn-success">Print 🖨️</button>
+        <a href="/waiter/{{ order.waiter }}/" class="btn btn-primary">New Order</a>
+        <a href="/dashboard/" class="btn btn-dark">Dashboard</a>
+    </div>
+
+</div>
+</div>
 </div>
 
 {% endblock %}

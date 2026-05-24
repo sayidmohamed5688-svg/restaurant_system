@@ -4,70 +4,82 @@
 
 {% block content %}
 
-<h2 class="mb-2">Table {{ table.number }} 🪑</h2>
-<p class="text-muted mb-4">Waiter: {{ waiter.username }}</p>
+<div class="row">
+    <div class="col-md-8">
+        <h2 class="page-title">Table {{ table.number }} 🪑</h2>
+        <p class="text-muted mb-4">Waiter: <strong>{{ waiter.username }}</strong></p>
 
-<form method="POST">
-    {% csrf_token %}
-    <input type="hidden" name="waiter_username" value="{{ waiter.username }}">
-    
-    <div class="mb-3">
-        <label>Customer Name</label>
-        <input type="text" class="form-control" name="customer_name" placeholder="Enter customer name">
-    </div>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" name="waiter_username" value="{{ waiter.username }}">
+            
+            <div class="card p-4 mb-4">
+                <div class="mb-3">
+                    <label class="fw-bold mb-2">Customer Name</label>
+                    <input type="text" class="form-control" name="customer_name" placeholder="Enter customer name">
+                </div>
 
-    <div class="mb-3">
-        <label>Filter by Category</label>
-        <select class="form-select" onchange="filterItems(this.value)">
-            <option value="all">All Items</option>
-            {% for category in categories %}
-            <option value="{{ category.id }}">{{ category.name }}</option>
-            {% endfor %}
-        </select>
-    </div>
-
-    <h5 class="mt-4 mb-3">Select Items</h5>
-    <div class="row" id="menu-items">
-        {% for item in menu_items %}
-        <div class="col-md-4 mb-3 menu-item-card" data-category="{{ item.category.id }}">
-            <div class="card">
-                {% if item.image %}
-                <img src="{{ item.image }}" class="card-img-top" style="height:120px; object-fit:cover;">
-                {% endif %}
-                <div class="card-body p-2">
-                    <h6>{{ item.name }}</h6>
-                    <p class="text-danger fw-bold">${{ item.price }}</p>
-                    <input type="hidden" name="item_ids" value="{{ item.id }}">
-                    <div class="input-group input-group-sm">
-                        <button type="button" class="btn btn-outline-danger" onclick="decrease(this)">-</button>
-                        <input type="number" name="quantities" value="0" min="0" class="form-control text-center qty-input" onchange="updateTotal()">
-                        <button type="button" class="btn btn-outline-success" onclick="increase(this)">+</button>
-                    </div>
+                <div class="mb-3">
+                    <label class="fw-bold mb-2">Filter by Category</label>
+                    <select class="form-select" onchange="filterItems(this.value)">
+                        <option value="all">All Items</option>
+                        {% for category in categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
             </div>
-        </div>
-        {% endfor %}
-    </div>
 
-    <div class="mb-3">
-        <label>Payment Method</label>
-        <select class="form-select" name="payment_method">
-            <option value="cash">💵 Cash</option>
-            <option value="zaad">📱 Zaad</option>
-            <option value="edahab">📱 eDahab</option>
-            <option value="mastercard">💳 Mastercard</option>
-        </select>
-    </div>
+            <h5 class="fw-bold mb-3">Select Items</h5>
+            <div class="row" id="menu-items">
+                {% for item in menu_items %}
+                <div class="col-md-4 col-6 mb-3 menu-item-card" data-category="{{ item.category.id }}">
+                    <div class="card">
+                        {% if item.image %}
+                        <img src="{{ item.image }}" class="card-img-top" style="height:120px; object-fit:cover; border-radius:16px 16px 0 0;">
+                        {% else %}
+                        <div style="height:120px; background:linear-gradient(135deg,#c0392b,#f39c12); border-radius:16px 16px 0 0; display:flex; align-items:center; justify-content:center; font-size:36px;">🍽️</div>
+                        {% endif %}
+                        <div class="card-body p-2">
+                            <h6 class="fw-bold mb-1">{{ item.name }}</h6>
+                            <p class="mb-2" style="color:#c0392b; font-weight:600;">${{ item.price }}</p>
+                            <input type="hidden" name="item_ids" value="{{ item.id }}">
+                            <div class="input-group input-group-sm">
+                                <button type="button" class="btn btn-outline-danger" onclick="decrease(this)">-</button>
+                                <input type="number" name="quantities" value="0" min="0" class="form-control text-center qty-input" onchange="updateTotal()">
+                                <button type="button" class="btn btn-outline-success" onclick="increase(this)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
 
-    <div class="card bg-light p-3 mb-4">
-        <h4>Total: $<span id="total">0.00</span></h4>
-    </div>
+            <div class="card p-4 mt-3">
+                <div class="mb-3">
+                    <label class="fw-bold mb-2">Payment Method</label>
+                    <select class="form-select" name="payment_method">
+                        <option value="cash">💵 Cash</option>
+                        <option value="zaad">📱 Zaad</option>
+                        <option value="edahab">📱 eDahab</option>
+                        <option value="mastercard">💳 Mastercard</option>
+                    </select>
+                </div>
 
-    <button type="submit" class="btn btn-danger btn-lg">
-        Place Order 🛒
-    </button>
-    <a href="/waiter/{{ waiter.username }}/" class="btn btn-dark btn-lg ms-2">Back</a>
-</form>
+                <div class="p-3 mb-3" style="background:#fff3e0; border-radius:12px; border-left:4px solid #f39c12;">
+                    <h4 class="mb-0">Total: $<span id="total">0.00</span></h4>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg flex-grow-1">
+                        Place Order 🛒
+                    </button>
+                    <a href="/waiter/{{ waiter.username }}/" class="btn btn-dark btn-lg">Back</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 
 <script>
 const prices = {
@@ -92,24 +104,17 @@ function decrease(btn) {
 
 function updateTotal() {
     let total = 0;
-    const cards = document.querySelectorAll('.menu-item-card');
-    cards.forEach(card => {
+    document.querySelectorAll('.menu-item-card').forEach(card => {
         const itemId = card.querySelector('input[name="item_ids"]').value;
         const qty = parseInt(card.querySelector('input[name="quantities"]').value) || 0;
-        const price = prices[itemId] || 0;
-        total += price * qty;
+        total += (prices[itemId] || 0) * qty;
     });
     document.getElementById('total').textContent = total.toFixed(2);
 }
 
 function filterItems(categoryId) {
-    const cards = document.querySelectorAll('.menu-item-card');
-    cards.forEach(card => {
-        if (categoryId === 'all' || card.dataset.category === categoryId) {
-            card.style.display = '';
-        } else {
-            card.style.display = 'none';
-        }
+    document.querySelectorAll('.menu-item-card').forEach(card => {
+        card.style.display = (categoryId === 'all' || card.dataset.category === categoryId) ? '' : 'none';
     });
 }
 </script>
