@@ -1,35 +1,185 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Sayid's Restaurant{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fdf6e3;
+            color: #2c3e50;
+        }
+
+        .navbar {
+            background: linear-gradient(135deg, #c0392b, #922b21) !important;
+            padding: 15px 0;
+            box-shadow: 0 4px 15px rgba(192,57,43,0.3);
+        }
+
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px !important;
+            color: white !important;
+            letter-spacing: 1px;
+        }
+
+        .nav-username {
+            color: rgba(255,255,255,0.9);
+            font-size: 14px;
+            margin-right: 10px;
+        }
+
+        .btn-logout {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 20px;
+            padding: 5px 16px;
+            font-size: 13px;
+        }
+
+        .btn-logout:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+
+        .main-content {
+            padding: 40px 0;
+            min-height: calc(100vh - 140px);
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            color: #c0392b;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #c0392b, #922b21);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 28px;
+            font-weight: 500;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #922b21, #7b241c);
+            transform: translateY(-1px);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, #f39c12, #d68910);
+            border: none;
+            border-radius: 25px;
+            color: white;
+        }
+
+        .btn-success {
+            border-radius: 25px;
+        }
+
+        .btn-dark {
+            border-radius: 25px;
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #c0392b, #922b21);
+            border: none;
+            border-radius: 25px;
+        }
+
+        .form-control, .form-select {
+            border-radius: 10px;
+            border: 2px solid #e8d5b0;
+            padding: 10px 15px;
+            background: white;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #c0392b;
+            box-shadow: 0 0 0 0.2rem rgba(192,57,43,0.15);
+        }
+
+        footer {
+            background: linear-gradient(135deg, #2c3e50, #1a252f);
+            color: rgba(255,255,255,0.7);
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+        }
+
+        .table {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .table thead {
+            background: linear-gradient(135deg, #c0392b, #922b21);
+            color: white;
+        }
+
+        .badge-free {
+            background: #27ae60;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .badge-busy {
+            background: #c0392b;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body>
 
-<nav class="navbar navbar-dark bg-danger">
+<nav class="navbar navbar-dark">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="/">🍕 Sayid's Restaurant</a>
-        <div>
+        <a class="navbar-brand" href="/">🍽️ Sayid's Restaurant</a>
+        <div class="d-flex align-items-center">
             {% if request.user.is_authenticated %}
-                <span class="text-white me-3">
-                    👤 {{ request.user.username }}
-                </span>
-                <a href="/logout/" class="btn btn-light btn-sm">Logout</a>
+                <span class="nav-username">👤 {{ request.user.username }}</span>
+                <a href="/logout/" class="btn btn-logout">Logout</a>
             {% else %}
-                <a href="/login/" class="btn btn-light btn-sm">Login</a>
+                <a href="/login/" class="btn btn-logout">Login</a>
             {% endif %}
         </div>
     </div>
 </nav>
 
-<div class="container mt-4">
-    {% block content %}
-    {% endblock %}
+<div class="main-content">
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
 </div>
 
-<footer class="bg-dark text-white text-center p-3 mt-5">
-    <p>© 2026 Sayid's Restaurant</p>
+<footer>
+    <p>🍽️ Sayid's Restaurant — hargeisa, Somaliland © 2026</p>
 </footer>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

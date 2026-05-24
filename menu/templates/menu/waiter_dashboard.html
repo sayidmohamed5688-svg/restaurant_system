@@ -4,16 +4,16 @@
 
 {% block content %}
 
-<h2 class="mb-4 text-center">👋 Select Your Name</h2>
+<h2 class="page-title text-center mb-5">👋 Select Your Name</h2>
 
 <div class="row justify-content-center">
 {% for waiter in waiters %}
-<div class="col-md-4 mb-3">
+<div class="col-md-4 mb-4">
     <a href="/waiter/{{ waiter.username }}/" class="text-decoration-none">
-        <div class="card text-center p-4 hover-card">
-            <h1>👤</h1>
-            <h4>{{ waiter.username }}</h4>
-            <p class="text-muted">Click to see your tables</p>
+        <div class="card text-center p-4">
+            <div style="font-size: 60px; margin-bottom: 15px;">👤</div>
+            <h4 style="color: #c0392b; font-weight: 600;">{{ waiter.username }}</h4>
+            <p style="color: #7f8c8d; font-size: 13px;">Click to see your tables</p>
         </div>
     </a>
 </div>
