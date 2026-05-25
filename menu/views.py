@@ -145,3 +145,33 @@ def mark_table_free(request, table_number):
     table.save()
     waiter_username = request.GET.get('waiter', '')
     return redirect(f'/waiter/{waiter_username}/')
+
+def daily_report(request):
+    from django.utils import timezone
+    from django.db.models import Sum, Count
+    import datetime
+    
+    today = timezone.now().date()
+    
+    # Today's orders
+    today_orders = Order.objects.filter(date__date=today)
+    
+    # Total money today
+    total_money = today_orders.aggregate(Sum('total_price'))['total_price__sum'] or 0
+    
+    # Orders by payment method
+    cash_total = today_orders.filter(payment_method='cash').aggregate(Sum('total_price'))['total_price__sum'] or 0
+    zaad_total = today_orders.filter(payment_method='zaad').aggregate(Sum('total_price'))['total_price__sum'] or 0
+    edahab_total = today_orders.filter(payment_method='edahab').aggregate(Sum('total_price'))['total_price__sum'] or 0
+    mastercard_total = today_orders.filter(payment_method='mastercard').aggregate(Sum('total_price'))['total_price__sum'] or 0
+    
+    return render(request, 'menu/daily_report.html', {
+        'today_orders': today_orders,
+        'total_money': total_money,
+        'total_orders': today_orders.count(),
+        'cash_total': cash_total,
+        'zaad_total': zaad_total,
+        'edahab_total': edahab_total,
+        'mastercard_total': mastercard_total,
+        'today': today,
+    })

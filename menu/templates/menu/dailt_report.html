@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}Daily Report{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="page-title mb-0">📊 Daily Report</h2>
+        <p class="text-muted">{{ today }}</p>
+    </div>
+    <a href="/" class="btn btn-dark">← Home</a>
+</div>
+
+<!-- Summary Cards -->
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card p-4 text-center" style="border-left: 4px solid #c0392b;">
+            <h2 style="color:#c0392b;">{{ total_orders }}</h2>
+            <p class="text-muted mb-0">Total Orders</p>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card p-4 text-center" style="border-left: 4px solid #27ae60;">
+            <h2 style="color:#27ae60;">${{ total_money }}</h2>
+            <p class="text-muted mb-0">Total Revenue</p>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card p-4 text-center" style="border-left: 4px solid #f39c12;">
+            <h2 style="color:#f39c12;">💵 ${{ cash_total }}</h2>
+            <p class="text-muted mb-0">Cash</p>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card p-4 text-center" style="border-left: 4px solid #3498db;">
+            <h2 style="color:#3498db;">📱 ${{ zaad_total }}</h2>
+            <p class="text-muted mb-0">Zaad</p>
+        </div>
+    </div>
+</div>
+
+<!-- Payment Methods -->
+<div class="row mb-4">
+    <div class="col-md-6 mb-3">
+        <div class="card p-4">
+            <h5 class="fw-bold mb-3">💳 Payment Methods</h5>
+            <div class="d-flex justify-content-between p-2 mb-2" style="background:#f8f9fa; border-radius:8px;">
+                <span>💵 Cash</span>
+                <strong>${{ cash_total }}</strong>
+            </div>
+            <div class="d-flex justify-content-between p-2 mb-2" style="background:#f8f9fa; border-radius:8px;">
+                <span>📱 Zaad</span>
+                <strong>${{ zaad_total }}</strong>
+            </div>
+            <div class="d-flex justify-content-between p-2 mb-2" style="background:#f8f9fa; border-radius:8px;">
+                <span>📱 eDahab</span>
+                <strong>${{ edahab_total }}</strong>
+            </div>
+            <div class="d-flex justify-content-between p-2" style="background:#f8f9fa; border-radius:8px;">
+                <span>💳 Mastercard</span>
+                <strong>${{ mastercard_total }}</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-3">
+        <div class="card p-4">
+            <h5 class="fw-bold mb-3">📋 Today's Orders</h5>
+            {% if today_orders %}
+            <div style="max-height:300px; overflow-y:auto;">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Table</th>
+                        <th>Waiter</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in today_orders %}
+                    <tr>
+                        <td>{{ order.customer_name }}</td>
+                        <td>{{ order.table }}</td>
+                        <td>{{ order.waiter }}</td>
+                        <td style="color:#c0392b;">${{ order.total_price }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            </div>
+            {% else %}
+            <p class="text-muted text-center mt-4">No orders today yet!</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-2">
+    <button onclick="window.print()" class="btn btn-success btn-lg">
+        Print Report 🖨️
+    </button>
+</div>
+
+{% endblock %}
