@@ -8,6 +8,12 @@ from django.contrib.auth.models import User
 from django.http import HttpResponse
 from menu.models import Table
 
+def create_tables(request):
+    Table.objects.all().delete()
+    for i in range(1, 101):
+        Table.objects.create(number=i)
+    return HttpResponse(f'Created {Table.objects.count()} tables!')
+
 def assign_tables(request):
     gadhyac = User.objects.get(username='gadhyac')
     faro = User.objects.get(username='faro')
@@ -44,5 +50,6 @@ urlpatterns = [
     path('take-order/<int:table_number>/', views.take_order, name='take_order'),
     path('waiter/<str:username>/', views.waiter_tables, name='waiter_tables'),
     path('table-free/<int:table_number>/', views.mark_table_free, name='mark_table_free'),
+    path('create-tables/', create_tables),
     path('assign-tables/', assign_tables),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
