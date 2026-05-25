@@ -4,20 +4,54 @@
 
 {% block content %}
 
-<h2 class="page-title text-center mb-5">👋 Select Your Name</h2>
+<div class="text-center mb-5">
+    <h1 class="page-title">👋 Select Your Name</h1>
+    <p class="text-muted">Choose your name to see your tables</p>
+</div>
 
 <div class="row justify-content-center">
 {% for waiter in waiters %}
 <div class="col-md-4 mb-4">
     <a href="/waiter/{{ waiter.username }}/" class="text-decoration-none">
         <div class="card text-center p-4">
-            <div style="font-size: 60px; margin-bottom: 15px;">👤</div>
-            <h4 style="color: #c0392b; font-weight: 600;">{{ waiter.username }}</h4>
-            <p style="color: #7f8c8d; font-size: 13px;">Click to see your tables</p>
+            <div style="width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg,#c0392b,#f39c12); display:flex; align-items:center; justify-content:center; margin:0 auto 15px; font-size:36px;">
+                👤
+            </div>
+            <h4 style="color:#c0392b; font-weight:600;">{{ waiter.username }}</h4>
+            <p style="color:#7f8c8d; font-size:13px;">Click to see your tables</p>
+            <span class="btn btn-primary btn-sm mt-2">View Tables →</span>
         </div>
     </a>
 </div>
 {% endfor %}
+</div>
+
+<hr class="mt-5">
+
+<!-- Contact Section -->
+<div class="text-center mt-4 mb-4">
+    <h5 class="text-muted mb-3">Contact & Support</h5>
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+        
+        <a href="https://wa.me/252638430345" target="_blank" 
+           class="btn btn-success btn-lg">
+            📱 WhatsApp
+        </a>
+        
+        <a href="mailto:sayidmohamed5688@gmail.com" 
+           class="btn btn-danger btn-lg">
+            📧 Gmail
+        </a>
+        
+        <a href="https://www.facebook.com/sayyed.mohammed.ali" target="_blank"
+           class="btn btn-primary btn-lg">
+            📘 Facebook
+        </a>
+        
+    </div>
+    <p class="text-muted mt-3" style="font-size:13px;">
+        Built by Sayid Mohamed Ali — Mogadishu, Somalia 🇸🇴
+    </p>
 </div>
 
 {% endblock %}
