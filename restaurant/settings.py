@@ -120,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'africa/mogadishu'
+TIME_ZONE = 'Africa/Mogadishu'
 
 USE_I18N = True
 
