@@ -4,242 +4,124 @@
 
 {% block content %}
 
-<!-- GOOGLE FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<!-- AOS -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
 <style>
 
+/* FORCE FULL VISIBILITY */
 *{
     font-family:'Poppins',sans-serif;
+    color:#ffffff !important;
 }
 
+/* BACKGROUND */
 body{
     background:
-    radial-gradient(circle at top right, rgba(255,140,0,.12), transparent 30%),
-    radial-gradient(circle at bottom left, rgba(255,0,80,.10), transparent 30%),
-    #090909;
-    color:white;
+    radial-gradient(circle at top right, rgba(255,140,0,.18), transparent 35%),
+    radial-gradient(circle at bottom left, rgba(255,0,80,.15), transparent 35%),
+    #070707;
     overflow-x:hidden;
 }
 
-/* SCROLLBAR */
-::-webkit-scrollbar{
-    width:10px;
+/* FIX ALL MUTED TEXT */
+p, span, td, th, h1, h2, h3, h4, h5, h6{
+    color:#ffffff !important;
+    font-weight:600;
 }
 
-::-webkit-scrollbar-thumb{
-    background:linear-gradient(#ff9500,#ff0055);
-    border-radius:20px;
+/* DATE FIX */
+.report-date{
+    color:#eaeaea !important;
+    font-weight:500;
+}
+
+/* TABLE TEXT FIX */
+.custom-table td,
+.custom-table th{
+    color:#ffffff !important;
+    font-weight:600;
 }
 
 /* GLOW */
 .glow{
     position:fixed;
-    width:350px;
-    height:350px;
+    width:360px;
+    height:360px;
     border-radius:50%;
     filter:blur(170px);
-    opacity:.16;
+    opacity:.25;
     z-index:-1;
-    animation:moveGlow 10s infinite alternate ease-in-out;
 }
 
-.orange{
-    background:#ff8800;
-    top:-100px;
-    right:-50px;
-}
-
-.pink{
-    background:#ff0055;
-    left:-80px;
-    bottom:-100px;
-    animation-delay:2s;
-}
-
-@keyframes moveGlow{
-    from{
-        transform:translateY(-30px);
-    }
-    to{
-        transform:translateY(30px);
-    }
-}
+.orange{ background:#ff8800; top:-100px; right:-50px; }
+.pink{ background:#ff0055; left:-80px; bottom:-100px; }
 
 /* HEADER */
-.report-header{
-    padding:60px 0 35px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-wrap:wrap;
-}
-
 .report-title{
-    font-size:68px;
-    font-weight:800;
-    background:linear-gradient(90deg,#ff9900,#ff0055,#ffffff);
+    font-size:64px;
+    font-weight:900;
+    background:linear-gradient(90deg,#ffb300,#ff0055,#ffffff);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
-    animation:titleZoom 1.4s ease;
-}
-
-@keyframes titleZoom{
-    from{
-        opacity:0;
-        transform:scale(.6);
-    }
-    to{
-        opacity:1;
-        transform:scale(1);
-    }
-}
-
-.report-date{
-    color:#bdbdbd;
-    font-size:18px;
-    margin-top:8px;
-}
-
-.home-btn{
-    padding:14px 28px;
-    border:none;
-    border-radius:60px;
-    font-weight:700;
-    background:linear-gradient(90deg,#1f1f1f,#2c2c2c);
-    color:white;
-    transition:.4s;
-    text-decoration:none;
-}
-
-.home-btn:hover{
-    transform:translateY(-5px);
-    color:white;
-    box-shadow:0 10px 25px rgba(255,255,255,.08);
 }
 
 /* CARDS */
 .report-card{
-    background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.08);
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.12);
     backdrop-filter:blur(18px);
     border-radius:28px;
     padding:30px;
-    transition:.4s ease;
-    height:100%;
-    position:relative;
-    overflow:hidden;
-    box-shadow:0 15px 40px rgba(0,0,0,.4);
 }
 
-.report-card:hover{
-    transform:translateY(-10px);
-}
-
-.report-card::before{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:linear-gradient(
-        120deg,
-        transparent,
-        rgba(255,255,255,.08),
-        transparent
-    );
-    transform:translateX(-100%);
-    transition:.8s;
-}
-
-.report-card:hover::before{
-    transform:translateX(100%);
-}
-
-/* ICON */
-.card-icon{
-    width:65px;
-    height:65px;
-    border-radius:20px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:30px;
-    margin-bottom:18px;
-}
-
-.orders-icon{
-    background:linear-gradient(135deg,#ff0055,#ff9900);
-}
-
-.money-icon{
-    background:linear-gradient(135deg,#00c853,#00e676);
-}
-
-.cash-icon{
-    background:linear-gradient(135deg,#ff9800,#ffc107);
-}
-
-.zaad-icon{
-    background:linear-gradient(135deg,#2196f3,#00b0ff);
-}
-
-/* NUMBERS */
+/* NUMBERS MUST BE BIG + CLEAR */
 .report-number{
-    font-size:38px;
+    font-size:42px;
+    font-weight:900;
+    color:#ffffff !important;
+}
+
+/* LABEL FIX */
+.report-label{
+    color:#e6e6e6 !important;
+    font-weight:500;
+}
+
+/* GLASS BOX FIX */
+.glass-box{
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:30px;
+    padding:30px;
+}
+
+/* SECTION TITLE FIX */
+.section-title{
+    font-size:24px;
+    font-weight:800;
+    color:#ffffff !important;
+}
+
+/* PAYMENT ROWS */
+.payment-item{
+    background:rgba(255,255,255,.08);
+    border-radius:15px;
+    padding:16px;
+    margin-bottom:12px;
+    display:flex;
+    justify-content:space-between;
+}
+
+/* AMOUNT */
+.payment-amount{
+    color:#ffb300 !important;
     font-weight:800;
 }
 
-.report-label{
-    color:#bdbdbd;
-    margin-top:6px;
-}
-
-/* BOX */
-.glass-box{
-    background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.08);
-    backdrop-filter:blur(20px);
-    border-radius:30px;
-    padding:30px;
-    box-shadow:0 20px 50px rgba(0,0,0,.45);
-    height:100%;
-}
-
-/* SECTION TITLE */
-.section-title{
-    font-size:24px;
-    font-weight:700;
-    margin-bottom:22px;
-}
-
-/* PAYMENT */
-.payment-item{
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.05);
-    border-radius:18px;
-    padding:18px 20px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:14px;
-    transition:.4s ease;
-}
-
-.payment-item:hover{
-    transform:translateX(8px);
-    background:rgba(255,255,255,.08);
-}
-
-.payment-amount{
-    font-weight:700;
-    color:#ff9900;
-}
-
-/* TABLE */
+/* TABLE FIX (MOST IMPORTANT) */
 .custom-table{
-    color:white;
+    width:100%;
 }
 
 .custom-table thead{
@@ -247,71 +129,45 @@ body{
 }
 
 .custom-table thead th{
-    border:none;
-    padding:18px;
-    color:white;
+    color:white !important;
+    font-weight:900;
+    padding:16px;
 }
 
 .custom-table tbody tr{
-    transition:.4s ease;
-    border-bottom:1px solid rgba(255,255,255,.05);
+    background:rgba(255,255,255,.03);
+    transition:.3s;
 }
 
 .custom-table tbody tr:hover{
-    background:rgba(255,255,255,.05);
+    background:rgba(255,255,255,.10);
 }
 
 .custom-table tbody td{
-    padding:18px;
-    color:#f1f1f1;
+    color:#ffffff !important;
+    font-weight:600;
+    padding:14px;
 }
 
-/* TOTAL */
-.price{
-    color:#ff9900;
-    font-weight:700;
-}
-
-/* PRINT BUTTON */
-.print-btn{
-    margin-top:35px;
-    padding:16px 38px;
-    border:none;
-    border-radius:60px;
-    font-size:18px;
-    font-weight:700;
-    background:linear-gradient(90deg,#00c853,#00e676);
-    color:white;
-    transition:.4s ease;
-    box-shadow:0 10px 25px rgba(0,255,100,.2);
-}
-
-.print-btn:hover{
-    transform:translateY(-6px) scale(1.05);
-}
-
-/* EMPTY */
+/* EMPTY STATE */
 .empty-text{
-    color:#bdbdbd;
     text-align:center;
-    padding:50px 0;
+    padding:50px;
+    color:#ffffff !important;
 }
 
-/* RESPONSIVE */
-@media(max-width:768px){
+/* BUTTON */
+.home-btn{
+    background:#1f1f1f;
+    color:white !important;
+    padding:12px 24px;
+    border-radius:50px;
+    text-decoration:none;
+    font-weight:700;
+}
 
-    .report-title{
-        font-size:44px;
-    }
-
-    .report-header{
-        gap:20px;
-    }
-
-    .report-number{
-        font-size:28px;
-    }
-
+.home-btn:hover{
+    background:#333;
 }
 
 </style>
@@ -322,303 +178,98 @@ body{
 <div class="container">
 
     <!-- HEADER -->
-    <div class="report-header">
+    <div class="report-header d-flex justify-content-between align-items-center flex-wrap">
 
         <div>
-
-            <h1 class="report-title">
-                📊 Daily Report
-            </h1>
-
-            <p class="report-date">
-                {{ today }}
-            </p>
-
+            <h1 class="report-title">📊 Daily Report</h1>
+            <p class="report-date">{{ today }}</p>
         </div>
 
-        <a href="/" class="home-btn">
-
-            ← Home
-
-        </a>
+        <a href="/" class="home-btn">← Home</a>
 
     </div>
 
-    <!-- SUMMARY -->
+    <!-- CARDS -->
     <div class="row mb-4">
 
-        <div class="col-md-3 mb-4">
-
-            <div class="report-card"
-                 data-aos="zoom-in">
-
-                <div class="card-icon orders-icon">
-                    📋
-                </div>
-
-                <div class="report-number">
-                    {{ total_orders }}
-                </div>
-
-                <div class="report-label">
-                    Total Orders
-                </div>
-
+        <div class="col-md-3 mb-3">
+            <div class="report-card">
+                <div class="report-number">{{ total_orders }}</div>
+                <div class="report-label">Total Orders</div>
             </div>
-
         </div>
 
-        <div class="col-md-3 mb-4">
-
-            <div class="report-card"
-                 data-aos="zoom-in"
-                 data-aos-delay="100">
-
-                <div class="card-icon money-icon">
-                    💰
-                </div>
-
-                <div class="report-number">
-                    ${{ total_money }}
-                </div>
-
-                <div class="report-label">
-                    Total Revenue
-                </div>
-
+        <div class="col-md-3 mb-3">
+            <div class="report-card">
+                <div class="report-number">${{ total_money }}</div>
+                <div class="report-label">Total Revenue</div>
             </div>
-
         </div>
 
-        <div class="col-md-3 mb-4">
-
-            <div class="report-card"
-                 data-aos="zoom-in"
-                 data-aos-delay="200">
-
-                <div class="card-icon cash-icon">
-                    💵
-                </div>
-
-                <div class="report-number">
-                    ${{ cash_total }}
-                </div>
-
-                <div class="report-label">
-                    Cash Payment
-                </div>
-
+        <div class="col-md-3 mb-3">
+            <div class="report-card">
+                <div class="report-number">${{ cash_total }}</div>
+                <div class="report-label">Cash Payment</div>
             </div>
-
         </div>
 
-        <div class="col-md-3 mb-4">
-
-            <div class="report-card"
-                 data-aos="zoom-in"
-                 data-aos-delay="300">
-
-                <div class="card-icon zaad-icon">
-                    📱
-                </div>
-
-                <div class="report-number">
-                    ${{ zaad_total }}
-                </div>
-
-                <div class="report-label">
-                    Zaad Payment
-                </div>
-
+        <div class="col-md-3 mb-3">
+            <div class="report-card">
+                <div class="report-number">${{ zaad_total }}</div>
+                <div class="report-label">Zaad Payment</div>
             </div>
-
         </div>
 
     </div>
 
-    <!-- PAYMENT + TABLE -->
-    <div class="row">
+    <!-- TABLE -->
+    <div class="glass-box">
 
-        <!-- PAYMENTS -->
-        <div class="col-md-5 mb-4">
+        <h3 class="section-title">📋 Today's Orders</h3>
 
-            <div class="glass-box"
-                 data-aos="fade-right">
+        {% if today_orders %}
 
-                <h3 class="section-title">
-                    💳 Payment Methods
-                </h3>
+        <table class="table custom-table">
 
-                <div class="payment-item">
+            <thead>
+                <tr>
+                    <th>Customer</th>
+                    <th>Table</th>
+                    <th>Waiter</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
 
-                    <span>
-                        💵 Cash
-                    </span>
+            <tbody>
 
-                    <span class="payment-amount">
-                        ${{ cash_total }}
-                    </span>
+                {% for order in today_orders %}
 
-                </div>
+                <tr>
+                    <td>{{ order.customer_name }}</td>
+                    <td>{{ order.table }}</td>
+                    <td>{{ order.waiter }}</td>
+                    <td>${{ order.total_price }}</td>
+                </tr>
 
-                <div class="payment-item">
+                {% endfor %}
 
-                    <span>
-                        📱 Zaad
-                    </span>
+            </tbody>
 
-                    <span class="payment-amount">
-                        ${{ zaad_total }}
-                    </span>
+        </table>
 
-                </div>
+        {% else %}
 
-                <div class="payment-item">
-
-                    <span>
-                        📱 eDahab
-                    </span>
-
-                    <span class="payment-amount">
-                        ${{ edahab_total }}
-                    </span>
-
-                </div>
-
-                <div class="payment-item">
-
-                    <span>
-                        💳 Mastercard
-                    </span>
-
-                    <span class="payment-amount">
-                        ${{ mastercard_total }}
-                    </span>
-
-                </div>
-
-            </div>
-
+        <div class="empty-text">
+            📭 No Orders Today Yet
         </div>
 
-        <!-- ORDERS -->
-        <div class="col-md-7 mb-4">
-
-            <div class="glass-box"
-                 data-aos="fade-left">
-
-                <h3 class="section-title">
-                    📋 Today's Orders
-                </h3>
-
-                {% if today_orders %}
-
-                <div style="max-height:400px; overflow-y:auto;">
-
-                    <table class="table custom-table">
-
-                        <thead>
-
-                            <tr>
-
-                                <th>Customer</th>
-
-                                <th>Table</th>
-
-                                <th>Waiter</th>
-
-                                <th>Total</th>
-
-                            </tr>
-
-                        </thead>
-
-                        <tbody>
-
-                            {% for order in today_orders %}
-
-                            <tr>
-
-                                <td>
-
-                                    {{ order.customer_name }}
-
-                                </td>
-
-                                <td>
-
-                                    {{ order.table }}
-
-                                </td>
-
-                                <td>
-
-                                    {{ order.waiter }}
-
-                                </td>
-
-                                <td class="price">
-
-                                    ${{ order.total_price }}
-
-                                </td>
-
-                            </tr>
-
-                            {% endfor %}
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-
-                {% else %}
-
-                <div class="empty-text">
-
-                    <div style="font-size:70px;">
-                        📭
-                    </div>
-
-                    <h4 class="mt-3">
-                        No Orders Today Yet
-                    </h4>
-
-                </div>
-
-                {% endif %}
-
-            </div>
-
-        </div>
-
-    </div>
-
-    <!-- PRINT -->
-    <div class="text-center mb-5">
-
-        <button onclick="window.print()"
-                class="print-btn">
-
-            Print Report 🖨️
-
-        </button>
+        {% endif %}
 
     </div>
 
 </div>
 
-<!-- AOS -->
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-
-<script>
-
-AOS.init({
-    duration:1200,
-    once:false,
-});
-
-</script>
+<script>AOS.init({duration:1000});</script>
 
 {% endblock %}

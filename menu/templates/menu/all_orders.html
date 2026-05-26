@@ -4,10 +4,7 @@
 
 {% block content %}
 
-<!-- GOOGLE FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<!-- AOS -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
 <style>
@@ -16,89 +13,53 @@
     font-family:'Poppins',sans-serif;
 }
 
+/* FIX: better contrast background */
 body{
     background:
-    radial-gradient(circle at top right, rgba(255,140,0,.12), transparent 30%),
-    radial-gradient(circle at bottom left, rgba(255,0,80,.10), transparent 30%),
-    #090909;
+    radial-gradient(circle at top right, rgba(255,140,0,.20), transparent 35%),
+    radial-gradient(circle at bottom left, rgba(255,0,80,.18), transparent 35%),
+    #070707;
     overflow-x:hidden;
-    color:white;
+    color:#ffffff;
+}
+
+/* STRONG TEXT FIX */
+h1,h2,h3,h4,h5,h6,p,td,th,span{
+    color:#ffffff !important;
+    font-weight:600;
+}
+
+/* DATE FIX */
+.date-text{
+    color:#e0e0e0 !important;
+    font-weight:500;
 }
 
 /* SCROLLBAR */
-::-webkit-scrollbar{
-    width:10px;
-}
-
+::-webkit-scrollbar{ width:10px; }
 ::-webkit-scrollbar-thumb{
     background:linear-gradient(#ff9500,#ff0055);
     border-radius:20px;
 }
 
-/* GLOW EFFECT */
+/* GLOW */
 .glow{
     position:fixed;
-    width:350px;
-    height:350px;
+    width:360px;
+    height:360px;
     border-radius:50%;
     filter:blur(170px);
-    opacity:.18;
+    opacity:.25;
     z-index:-1;
     animation:moveGlow 10s infinite alternate ease-in-out;
 }
 
-.glow.orange{
-    background:#ff8800;
-    top:-80px;
-    right:-50px;
-}
-
-.glow.pink{
-    background:#ff0055;
-    bottom:-80px;
-    left:-50px;
-    animation-delay:2s;
-}
+.glow.orange{ background:#ff8800; top:-80px; right:-50px; }
+.glow.pink{ background:#ff0055; bottom:-80px; left:-50px; animation-delay:2s; }
 
 @keyframes moveGlow{
-    from{
-        transform:translateY(-30px);
-    }
-    to{
-        transform:translateY(30px);
-    }
-}
-
-/* FLOAT ICONS */
-.float-icon{
-    position:fixed;
-    font-size:42px;
-    opacity:.08;
-    z-index:-1;
-    animation:float 6s infinite ease-in-out;
-}
-
-.icon1{
-    top:20%;
-    left:5%;
-}
-
-.icon2{
-    bottom:15%;
-    right:5%;
-    animation-delay:2s;
-}
-
-@keyframes float{
-    0%{
-        transform:translateY(0);
-    }
-    50%{
-        transform:translateY(-25px);
-    }
-    100%{
-        transform:translateY(0);
-    }
+    from{ transform:translateY(-30px); }
+    to{ transform:translateY(30px); }
 }
 
 /* HEADER */
@@ -108,218 +69,133 @@ body{
 }
 
 .orders-title{
-    font-size:72px;
-    font-weight:800;
-    background:linear-gradient(90deg,#ff9900,#ff0055,#ffffff);
+    font-size:70px;
+    font-weight:900;
+    background:linear-gradient(90deg,#ffb300,#ff0055,#ffffff);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
-    animation:titleZoom 1.4s ease;
-}
-
-@keyframes titleZoom{
-    from{
-        opacity:0;
-        transform:scale(.6);
-    }
-    to{
-        opacity:1;
-        transform:scale(1);
-    }
+    text-shadow:0 0 30px rgba(255,100,0,.3);
 }
 
 .orders-subtitle{
-    color:#bfbfbf;
+    color:#d6d6d6;
     font-size:20px;
-    margin-top:15px;
-    animation:fadeUp 1.5s ease;
-}
-
-@keyframes fadeUp{
-    from{
-        opacity:0;
-        transform:translateY(40px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-/* TABLE CONTAINER */
-.orders-wrapper{
-    background:rgba(255,255,255,.05);
-    border:1px solid rgba(255,255,255,.08);
-    backdrop-filter:blur(20px);
-    border-radius:32px;
-    overflow:hidden;
-    box-shadow:0 20px 60px rgba(0,0,0,.45);
-    animation:fadeUp 1.5s ease;
+    font-weight:500;
 }
 
 /* TABLE */
-.orders-table{
-    margin:0;
-    color:white;
+.orders-wrapper{
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.12);
+    backdrop-filter:blur(20px);
+    border-radius:30px;
+    overflow:hidden;
+    box-shadow:0 25px 70px rgba(0,0,0,.6);
 }
 
+/* HEADER TABLE */
 .orders-table thead{
     background:linear-gradient(90deg,#ff0055,#ff9900);
 }
 
 .orders-table thead th{
-    border:none;
-    padding:24px;
-    color:white;
+    padding:22px;
     font-size:16px;
-    font-weight:700;
-    letter-spacing:.5px;
+    font-weight:800;
+    color:#ffffff !important;
 }
 
 /* ROWS */
 .orders-table tbody tr{
-    transition:.4s ease;
-    border-bottom:1px solid rgba(255,255,255,.05);
+    transition:.3s ease;
+    border-bottom:1px solid rgba(255,255,255,.08);
 }
 
 .orders-table tbody tr:hover{
-    background:rgba(255,255,255,.06);
+    background:rgba(255,255,255,.08);
     transform:scale(1.01);
 }
 
 .orders-table tbody td{
-    padding:24px 20px;
-    vertical-align:middle;
-    color:#f1f1f1;
-    font-weight:500;
+    padding:22px;
+    font-size:15px;
+    font-weight:600;
+    color:#ffffff !important;
 }
 
 /* CUSTOMER */
 .customer-box{
     display:flex;
     align-items:center;
-    gap:14px;
+    gap:12px;
 }
 
 .customer-avatar{
-    width:48px;
-    height:48px;
+    width:45px;
+    height:45px;
     border-radius:50%;
     background:linear-gradient(135deg,#ff9900,#ff0055);
     display:flex;
     align-items:center;
     justify-content:center;
-    font-weight:700;
+    font-weight:800;
     color:white;
-    font-size:18px;
-    box-shadow:0 5px 15px rgba(255,120,0,.3);
 }
 
 /* ITEM */
 .item-pill{
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.08);
-    padding:10px 18px;
-    border-radius:50px;
-    display:inline-block;
+    background:rgba(255,255,255,.10);
+    padding:8px 14px;
+    border-radius:30px;
+    font-weight:600;
 }
 
 /* QUANTITY */
 .quantity-badge{
     background:linear-gradient(90deg,#ff9900,#ff0055);
-    padding:10px 18px;
-    border-radius:50px;
-    font-weight:700;
-    display:inline-block;
-    animation:pulse 2s infinite;
-}
-
-@keyframes pulse{
-    0%{
-        transform:scale(1);
-    }
-    50%{
-        transform:scale(1.08);
-    }
-    100%{
-        transform:scale(1);
-    }
-}
-
-/* DATE */
-.date-text{
-    color:#d1d1d1;
+    padding:8px 14px;
+    border-radius:30px;
+    font-weight:800;
 }
 
 /* BUTTONS */
 .action-btn{
     border:none;
     border-radius:50px;
-    padding:11px 20px;
+    padding:10px 16px;
     font-weight:700;
-    transition:.4s ease;
-    position:relative;
-    overflow:hidden;
-}
-
-.action-btn::before{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:rgba(255,255,255,.18);
-    transform:translateX(-100%);
-    transition:.5s;
-}
-
-.action-btn:hover::before{
-    transform:translateX(100%);
+    transition:.3s ease;
 }
 
 .action-btn:hover{
-    transform:translateY(-5px) scale(1.05);
+    transform:scale(1.05);
 }
 
 /* EMPTY */
 .empty-box{
-    padding:90px 20px;
     text-align:center;
+    padding:80px 20px;
 }
 
 .empty-box h3{
-    font-size:38px;
-    margin-top:15px;
+    font-size:34px;
+    font-weight:800;
 }
 
 .empty-box p{
-    color:#bfbfbf;
+    color:#cfcfcf;
 }
 
-/* RESPONSIVE */
-@media(max-width:768px){
-
-    .orders-title{
-        font-size:46px;
-    }
-
-    .orders-subtitle{
-        font-size:16px;
-    }
-
-    .orders-table thead th{
-        font-size:13px;
-        padding:18px 10px;
-    }
-
-    .orders-table tbody td{
-        font-size:13px;
-        padding:18px 10px;
-    }
-
-    .action-btn{
-        padding:8px 12px;
-        font-size:12px;
-    }
-
+/* FLOAT */
+.float-icon{
+    position:fixed;
+    font-size:40px;
+    opacity:.12;
+    z-index:-1;
 }
+
+.icon1{ top:20%; left:5%; }
+.icon2{ bottom:15%; right:6%; }
 
 </style>
 
@@ -329,124 +205,57 @@ body{
 <div class="float-icon icon1">📋</div>
 <div class="float-icon icon2">🍽️</div>
 
-<!-- HEADER -->
 <div class="orders-header">
 
-    <h1 class="orders-title">
-        📋 All Orders
-    </h1>
-
-    <p class="orders-subtitle">
-        Professional restaurant order management dashboard
-    </p>
+    <h1 class="orders-title">📋 All Orders</h1>
+    <p class="orders-subtitle">Professional restaurant order management dashboard</p>
 
 </div>
 
-<!-- TABLE -->
 <div class="container">
 
-    <div class="orders-wrapper"
-         data-aos="zoom-in">
+    <div class="orders-wrapper" data-aos="zoom-in">
 
         {% if orders %}
 
         <div class="table-responsive">
 
-            <table class="table orders-table align-middle">
+            <table class="table orders-table">
 
                 <thead>
-
                     <tr>
-
                         <th>👤 Customer</th>
-
                         <th>🍔 Item</th>
-
                         <th>🔥 Quantity</th>
-
                         <th>📅 Date</th>
-
                         <th>⚡ Actions</th>
-
                     </tr>
-
                 </thead>
 
                 <tbody>
 
                     {% for order in orders %}
 
-                    <tr
-                    data-aos="fade-up"
-                    data-aos-delay="100">
+                    <tr data-aos="fade-up">
 
-                        <!-- CUSTOMER -->
                         <td>
-
                             <div class="customer-box">
-
                                 <div class="customer-avatar">
-
                                     {{ order.customer_name|slice:":1" }}
-
                                 </div>
-
-                                <div>
-
-                                    {{ order.customer_name }}
-
-                                </div>
-
+                                <div>{{ order.customer_name }}</div>
                             </div>
-
                         </td>
 
-                        <!-- ITEM -->
+                        <td><span class="item-pill">{{ order.item }}</span></td>
+
+                        <td><span class="quantity-badge">x{{ order.quantity }}</span></td>
+
+                        <td class="date-text">{{ order.date }}</td>
+
                         <td>
-
-                            <span class="item-pill">
-
-                                {{ order.item }}
-
-                            </span>
-
-                        </td>
-
-                        <!-- QUANTITY -->
-                        <td>
-
-                            <span class="quantity-badge">
-
-                                x{{ order.quantity }}
-
-                            </span>
-
-                        </td>
-
-                        <!-- DATE -->
-                        <td class="date-text">
-
-                            {{ order.date }}
-
-                        </td>
-
-                        <!-- ACTIONS -->
-                        <td>
-
-                            <a href="/edit/{{ order.pk }}/"
-                               class="btn btn-warning action-btn me-2">
-
-                                Edit ✏️
-
-                            </a>
-
-                            <a href="/delete/{{ order.pk }}/"
-                               class="btn btn-danger action-btn">
-
-                                Delete 🗑️
-
-                            </a>
-
+                            <a href="/edit/{{ order.pk }}/" class="btn btn-warning action-btn me-2">Edit ✏️</a>
+                            <a href="/delete/{{ order.pk }}/" class="btn btn-danger action-btn">Delete 🗑️</a>
                         </td>
 
                     </tr>
@@ -463,17 +272,9 @@ body{
 
         <div class="empty-box">
 
-            <div style="font-size:90px;">
-                📭
-            </div>
-
-            <h3>
-                No Orders Yet
-            </h3>
-
-            <p>
-                Customer restaurant orders will appear here beautifully.
-            </p>
+            <div style="font-size:80px;">📭</div>
+            <h3>No Orders Yet</h3>
+            <p>Customer orders will appear here.</p>
 
         </div>
 
@@ -483,16 +284,10 @@ body{
 
 </div>
 
-<!-- AOS -->
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 
 <script>
-
-AOS.init({
-    duration:1200,
-    once:false,
-});
-
+AOS.init({ duration: 1000, once: false });
 </script>
 
 {% endblock %}
