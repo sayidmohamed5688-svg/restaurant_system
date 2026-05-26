@@ -18,209 +18,227 @@
 
 body{
     background:
-    radial-gradient(circle at top right, rgba(255,140,0,0.15), transparent 30%),
-    radial-gradient(circle at bottom left, rgba(255,0,80,0.12), transparent 25%),
-    #0d0d0d;
-    overflow-x: hidden;
+    radial-gradient(circle at top right, rgba(255,140,0,.15), transparent 25%),
+    radial-gradient(circle at bottom left, rgba(255,0,90,.12), transparent 25%),
+    #0a0a0a;
+    overflow-x:hidden;
+    color:white;
 }
 
-/* FLOATING GLOW */
+/* SCROLLBAR */
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:linear-gradient(#ff8800,#ff0055);
+    border-radius:20px;
+}
+
+/* GLOW EFFECT */
 .glow{
-    position: fixed;
-    width: 300px;
-    height: 300px;
-    background: orange;
-    filter: blur(140px);
-    opacity: .18;
-    z-index: -1;
-    animation: moveGlow 10s infinite alternate ease-in-out;
+    position:fixed;
+    width:320px;
+    height:320px;
+    background:#ff8800;
+    filter:blur(160px);
+    opacity:.18;
+    z-index:-1;
+    animation:moveGlow 10s infinite alternate ease-in-out;
 }
 
 .glow2{
-    right: 0;
-    bottom: 0;
-    background: #ff0066;
-    animation-delay: 2s;
+    right:0;
+    bottom:0;
+    background:#ff0055;
+    animation-delay:2s;
 }
 
 @keyframes moveGlow{
     from{
-        transform: translateY(-40px) translateX(0);
+        transform:translateY(-40px);
     }
     to{
-        transform: translateY(40px) translateX(-50px);
+        transform:translateY(40px);
     }
 }
 
 /* HERO */
-.hero-box{
-    padding: 80px 20px 30px;
-    text-align: center;
+.hero-section{
+    padding:90px 20px 40px;
+    text-align:center;
 }
 
 .main-title{
-    font-size: 70px;
-    font-weight: 800;
-    background: linear-gradient(90deg,#ff9900,#ff0066,#ffffff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: titleZoom 1.5s ease;
+    font-size:72px;
+    font-weight:800;
+    background:linear-gradient(90deg,#ff9900,#ff0055,#ffffff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:titleAnimation 1.5s ease;
 }
 
-@keyframes titleZoom{
+@keyframes titleAnimation{
     from{
         opacity:0;
-        transform: scale(.6);
+        transform:scale(.6);
     }
     to{
         opacity:1;
-        transform: scale(1);
+        transform:scale(1);
     }
 }
 
 .subtitle{
-    color: #ccc;
-    font-size: 20px;
-    margin-top: 15px;
-    animation: fadeUp 1.5s ease;
+    color:#cfcfcf;
+    font-size:20px;
+    margin-top:16px;
+    animation:fadeUp 1.5s ease;
 }
 
 @keyframes fadeUp{
     from{
         opacity:0;
-        transform: translateY(50px);
+        transform:translateY(40px);
     }
     to{
         opacity:1;
-        transform: translateY(0);
+        transform:translateY(0);
     }
 }
 
 /* CATEGORY */
 .category-title{
-    color: white;
-    font-size: 34px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    position: relative;
-    display: inline-block;
+    font-size:36px;
+    font-weight:700;
+    margin-bottom:25px;
+    position:relative;
+    display:inline-block;
 }
 
 .category-title::after{
     content:'';
     position:absolute;
-    width: 60%;
-    height:4px;
-    background: linear-gradient(to right,#ff9900,#ff0066);
-    bottom:-8px;
     left:0;
+    bottom:-8px;
+    width:70%;
+    height:4px;
     border-radius:20px;
+    background:linear-gradient(90deg,#ff9900,#ff0055);
 }
 
 /* CARD */
 .food-card{
-    position: relative;
-    overflow: hidden;
-    border-radius: 28px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.08);
-    backdrop-filter: blur(14px);
-    transition: .5s ease;
-    box-shadow: 0 15px 35px rgba(0,0,0,.35);
+    position:relative;
+    overflow:hidden;
+    border-radius:28px;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(18px);
+    transition:.5s ease;
+    box-shadow:0 20px 40px rgba(0,0,0,.4);
 }
 
 .food-card:hover{
-    transform: translateY(-15px) scale(1.03);
-    box-shadow: 0 25px 50px rgba(255,140,0,.35);
+    transform:translateY(-15px) scale(1.03);
+    box-shadow:0 25px 55px rgba(255,120,0,.35);
 }
 
+/* SHINY EFFECT */
 .food-card::before{
     content:'';
     position:absolute;
-    inset:0;
-    background: linear-gradient(135deg, transparent, rgba(255,255,255,.08), transparent);
-    transform: translateX(-100%);
-    transition: .8s;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,.15),
+        transparent
+    );
+    transition:.8s;
 }
 
 .food-card:hover::before{
-    transform: translateX(100%);
+    left:100%;
 }
 
 /* IMAGE */
 .food-image-box{
     overflow:hidden;
-    position: relative;
+    position:relative;
 }
 
 .food-img{
     width:100%;
-    height:220px;
+    height:230px;
     object-fit:cover;
-    transition: .8s ease;
+    transition:.8s ease;
 }
 
 .food-card:hover .food-img{
-    transform: scale(1.15) rotate(2deg);
+    transform:scale(1.15) rotate(2deg);
 }
 
-/* IMAGE OVERLAY */
-.overlay{
+/* OVERLAY */
+.image-overlay{
     position:absolute;
     inset:0;
-    background: linear-gradient(to top, rgba(0,0,0,.8), transparent);
+    background:linear-gradient(to top, rgba(0,0,0,.8), transparent);
 }
 
-/* BODY */
-.food-body{
-    padding:20px;
-    color:white;
-}
-
-.food-name{
-    font-size: 20px;
-    font-weight: 700;
-}
-
-.food-price{
-    color:#ff9900;
-    font-size: 22px;
-    font-weight: 700;
-}
-
-/* BADGE */
+/* HOT BADGE */
 .hot-badge{
     position:absolute;
     top:15px;
     right:15px;
-    background: linear-gradient(90deg,#ff0066,#ff9900);
+    z-index:5;
+    background:linear-gradient(90deg,#ff0055,#ff9900);
     color:white;
-    padding:7px 16px;
-    border-radius:40px;
+    padding:8px 16px;
+    border-radius:50px;
     font-size:12px;
     font-weight:700;
-    animation: pulse 2s infinite;
+    animation:pulse 2s infinite;
 }
 
 @keyframes pulse{
     0%{
-        transform: scale(1);
+        transform:scale(1);
     }
     50%{
-        transform: scale(1.1);
+        transform:scale(1.08);
     }
     100%{
-        transform: scale(1);
+        transform:scale(1);
     }
+}
+
+/* CARD BODY */
+.food-body{
+    padding:22px;
+}
+
+.food-name{
+    font-size:22px;
+    font-weight:700;
+}
+
+.food-price{
+    color:#ff9900;
+    font-size:24px;
+    font-weight:700;
 }
 
 /* BUTTONS */
 .action-btn{
-    padding:14px 34px;
-    border-radius:60px;
     border:none;
+    border-radius:60px;
+    padding:15px 32px;
     font-weight:700;
-    transition:.4s;
+    transition:.4s ease;
     position:relative;
     overflow:hidden;
 }
@@ -228,52 +246,67 @@ body{
 .action-btn::before{
     content:'';
     position:absolute;
-    width:100%;
-    height:100%;
-    background: rgba(255,255,255,.2);
-    left:-100%;
-    top:0;
+    inset:0;
+    background:rgba(255,255,255,.2);
+    transform:translateX(-100%);
     transition:.5s;
 }
 
 .action-btn:hover::before{
-    left:100%;
+    transform:translateX(100%);
 }
 
 .action-btn:hover{
-    transform: translateY(-6px) scale(1.05);
+    transform:translateY(-6px) scale(1.05);
 }
 
-/* FLOATING ICON */
+/* FLOATING ICONS */
 .float-icon{
     position:fixed;
-    font-size:40px;
-    animation: float 6s infinite ease-in-out;
-    opacity:.15;
+    font-size:45px;
+    opacity:.12;
     z-index:-1;
+    animation:float 6s infinite ease-in-out;
 }
 
 .icon1{
-    top:20%;
+    top:18%;
     left:5%;
 }
 
 .icon2{
-    bottom:20%;
-    right:7%;
+    bottom:18%;
+    right:6%;
     animation-delay:2s;
 }
 
 @keyframes float{
     0%{
-        transform: translateY(0);
+        transform:translateY(0);
     }
     50%{
-        transform: translateY(-30px);
+        transform:translateY(-25px);
     }
     100%{
-        transform: translateY(0);
+        transform:translateY(0);
     }
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+
+    .main-title{
+        font-size:48px;
+    }
+
+    .category-title{
+        font-size:28px;
+    }
+
+    .food-img{
+        height:180px;
+    }
+
 }
 
 </style>
@@ -285,7 +318,7 @@ body{
 <div class="float-icon icon2">🍕</div>
 
 <!-- HERO -->
-<div class="hero-box">
+<div class="hero-section">
 
     <h1 class="main-title">
         🍽️ Sayid's Restaurant
@@ -297,7 +330,7 @@ body{
 
 </div>
 
-<!-- CATEGORY LOOP -->
+<!-- MENU -->
 {% for category in categories %}
 
 <h3 class="category-title mt-5" data-aos="fade-right">
@@ -309,7 +342,9 @@ body{
     {% for item in category.menuitem_set.all %}
     {% if item.available %}
 
-    <div class="col-md-3 col-6 mb-4" data-aos="zoom-in" data-aos-delay="100">
+    <div class="col-md-3 col-6 mb-4"
+         data-aos="zoom-in"
+         data-aos-delay="100">
 
         <div class="food-card h-100">
 
@@ -321,21 +356,22 @@ body{
 
             <div class="food-image-box">
 
-                <img src="{{ item.image }}" class="food-img">
+                <img src="{{ item.image }}"
+                     class="food-img">
 
-                <div class="overlay"></div>
+                <div class="image-overlay"></div>
 
             </div>
 
             {% else %}
 
             <div style="
-            height:220px;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            font-size:70px;
-            background:linear-gradient(135deg,#ff0066,#ff9900);
+                height:230px;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                font-size:70px;
+                background:linear-gradient(135deg,#ff0055,#ff9900);
             ">
                 🍽️
             </div>
@@ -366,22 +402,35 @@ body{
 {% endfor %}
 
 <!-- BUTTONS -->
-<div class="text-center mt-5 mb-5" data-aos="fade-up">
+<div class="text-center mt-5 mb-5"
+     data-aos="fade-up">
 
-    <a href="/dashboard/" class="btn btn-primary btn-lg me-3 action-btn">
+    <a href="/dashboard/"
+       class="btn btn-primary btn-lg me-3 action-btn">
+
         Waiter Dashboard 👤
+
     </a>
 
-    <a href="/orders/" class="btn btn-warning btn-lg me-3 action-btn">
+    <a href="/orders/"
+       class="btn btn-warning btn-lg me-3 action-btn">
+
         All Orders 📋
+
     </a>
 
-    <a href="/report/" class="btn btn-success btn-lg me-3 action-btn">
+    <a href="/report/"
+       class="btn btn-success btn-lg me-3 action-btn">
+
         Daily Report 📊
+
     </a>
 
-    <a href="/search/" class="btn btn-dark btn-lg action-btn">
+    <a href="/search/"
+       class="btn btn-dark btn-lg action-btn">
+
         Search 🔍
+
     </a>
 
 </div>
@@ -392,8 +441,8 @@ body{
 <script>
 
 AOS.init({
-    duration: 1000,
-    once: false,
+    duration:1200,
+    once:false,
 });
 
 </script>

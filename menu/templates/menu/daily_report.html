@@ -4,103 +4,621 @@
 
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-        <h2 class="page-title mb-0">📊 Daily Report</h2>
-        <p class="text-muted">{{ today }}</p>
+<!-- GOOGLE FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- AOS -->
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+<style>
+
+*{
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:
+    radial-gradient(circle at top right, rgba(255,140,0,.12), transparent 30%),
+    radial-gradient(circle at bottom left, rgba(255,0,80,.10), transparent 30%),
+    #090909;
+    color:white;
+    overflow-x:hidden;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{
+    width:10px;
+}
+
+::-webkit-scrollbar-thumb{
+    background:linear-gradient(#ff9500,#ff0055);
+    border-radius:20px;
+}
+
+/* GLOW */
+.glow{
+    position:fixed;
+    width:350px;
+    height:350px;
+    border-radius:50%;
+    filter:blur(170px);
+    opacity:.16;
+    z-index:-1;
+    animation:moveGlow 10s infinite alternate ease-in-out;
+}
+
+.orange{
+    background:#ff8800;
+    top:-100px;
+    right:-50px;
+}
+
+.pink{
+    background:#ff0055;
+    left:-80px;
+    bottom:-100px;
+    animation-delay:2s;
+}
+
+@keyframes moveGlow{
+    from{
+        transform:translateY(-30px);
+    }
+    to{
+        transform:translateY(30px);
+    }
+}
+
+/* HEADER */
+.report-header{
+    padding:60px 0 35px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.report-title{
+    font-size:68px;
+    font-weight:800;
+    background:linear-gradient(90deg,#ff9900,#ff0055,#ffffff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:titleZoom 1.4s ease;
+}
+
+@keyframes titleZoom{
+    from{
+        opacity:0;
+        transform:scale(.6);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+.report-date{
+    color:#bdbdbd;
+    font-size:18px;
+    margin-top:8px;
+}
+
+.home-btn{
+    padding:14px 28px;
+    border:none;
+    border-radius:60px;
+    font-weight:700;
+    background:linear-gradient(90deg,#1f1f1f,#2c2c2c);
+    color:white;
+    transition:.4s;
+    text-decoration:none;
+}
+
+.home-btn:hover{
+    transform:translateY(-5px);
+    color:white;
+    box-shadow:0 10px 25px rgba(255,255,255,.08);
+}
+
+/* CARDS */
+.report-card{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(18px);
+    border-radius:28px;
+    padding:30px;
+    transition:.4s ease;
+    height:100%;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 15px 40px rgba(0,0,0,.4);
+}
+
+.report-card:hover{
+    transform:translateY(-10px);
+}
+
+.report-card::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,.08),
+        transparent
+    );
+    transform:translateX(-100%);
+    transition:.8s;
+}
+
+.report-card:hover::before{
+    transform:translateX(100%);
+}
+
+/* ICON */
+.card-icon{
+    width:65px;
+    height:65px;
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:30px;
+    margin-bottom:18px;
+}
+
+.orders-icon{
+    background:linear-gradient(135deg,#ff0055,#ff9900);
+}
+
+.money-icon{
+    background:linear-gradient(135deg,#00c853,#00e676);
+}
+
+.cash-icon{
+    background:linear-gradient(135deg,#ff9800,#ffc107);
+}
+
+.zaad-icon{
+    background:linear-gradient(135deg,#2196f3,#00b0ff);
+}
+
+/* NUMBERS */
+.report-number{
+    font-size:38px;
+    font-weight:800;
+}
+
+.report-label{
+    color:#bdbdbd;
+    margin-top:6px;
+}
+
+/* BOX */
+.glass-box{
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(20px);
+    border-radius:30px;
+    padding:30px;
+    box-shadow:0 20px 50px rgba(0,0,0,.45);
+    height:100%;
+}
+
+/* SECTION TITLE */
+.section-title{
+    font-size:24px;
+    font-weight:700;
+    margin-bottom:22px;
+}
+
+/* PAYMENT */
+.payment-item{
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.05);
+    border-radius:18px;
+    padding:18px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:14px;
+    transition:.4s ease;
+}
+
+.payment-item:hover{
+    transform:translateX(8px);
+    background:rgba(255,255,255,.08);
+}
+
+.payment-amount{
+    font-weight:700;
+    color:#ff9900;
+}
+
+/* TABLE */
+.custom-table{
+    color:white;
+}
+
+.custom-table thead{
+    background:linear-gradient(90deg,#ff0055,#ff9900);
+}
+
+.custom-table thead th{
+    border:none;
+    padding:18px;
+    color:white;
+}
+
+.custom-table tbody tr{
+    transition:.4s ease;
+    border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.custom-table tbody tr:hover{
+    background:rgba(255,255,255,.05);
+}
+
+.custom-table tbody td{
+    padding:18px;
+    color:#f1f1f1;
+}
+
+/* TOTAL */
+.price{
+    color:#ff9900;
+    font-weight:700;
+}
+
+/* PRINT BUTTON */
+.print-btn{
+    margin-top:35px;
+    padding:16px 38px;
+    border:none;
+    border-radius:60px;
+    font-size:18px;
+    font-weight:700;
+    background:linear-gradient(90deg,#00c853,#00e676);
+    color:white;
+    transition:.4s ease;
+    box-shadow:0 10px 25px rgba(0,255,100,.2);
+}
+
+.print-btn:hover{
+    transform:translateY(-6px) scale(1.05);
+}
+
+/* EMPTY */
+.empty-text{
+    color:#bdbdbd;
+    text-align:center;
+    padding:50px 0;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+
+    .report-title{
+        font-size:44px;
+    }
+
+    .report-header{
+        gap:20px;
+    }
+
+    .report-number{
+        font-size:28px;
+    }
+
+}
+
+</style>
+
+<div class="glow orange"></div>
+<div class="glow pink"></div>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="report-header">
+
+        <div>
+
+            <h1 class="report-title">
+                📊 Daily Report
+            </h1>
+
+            <p class="report-date">
+                {{ today }}
+            </p>
+
+        </div>
+
+        <a href="/" class="home-btn">
+
+            ← Home
+
+        </a>
+
     </div>
-    <a href="/" class="btn btn-dark">← Home</a>
+
+    <!-- SUMMARY -->
+    <div class="row mb-4">
+
+        <div class="col-md-3 mb-4">
+
+            <div class="report-card"
+                 data-aos="zoom-in">
+
+                <div class="card-icon orders-icon">
+                    📋
+                </div>
+
+                <div class="report-number">
+                    {{ total_orders }}
+                </div>
+
+                <div class="report-label">
+                    Total Orders
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3 mb-4">
+
+            <div class="report-card"
+                 data-aos="zoom-in"
+                 data-aos-delay="100">
+
+                <div class="card-icon money-icon">
+                    💰
+                </div>
+
+                <div class="report-number">
+                    ${{ total_money }}
+                </div>
+
+                <div class="report-label">
+                    Total Revenue
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3 mb-4">
+
+            <div class="report-card"
+                 data-aos="zoom-in"
+                 data-aos-delay="200">
+
+                <div class="card-icon cash-icon">
+                    💵
+                </div>
+
+                <div class="report-number">
+                    ${{ cash_total }}
+                </div>
+
+                <div class="report-label">
+                    Cash Payment
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-3 mb-4">
+
+            <div class="report-card"
+                 data-aos="zoom-in"
+                 data-aos-delay="300">
+
+                <div class="card-icon zaad-icon">
+                    📱
+                </div>
+
+                <div class="report-number">
+                    ${{ zaad_total }}
+                </div>
+
+                <div class="report-label">
+                    Zaad Payment
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- PAYMENT + TABLE -->
+    <div class="row">
+
+        <!-- PAYMENTS -->
+        <div class="col-md-5 mb-4">
+
+            <div class="glass-box"
+                 data-aos="fade-right">
+
+                <h3 class="section-title">
+                    💳 Payment Methods
+                </h3>
+
+                <div class="payment-item">
+
+                    <span>
+                        💵 Cash
+                    </span>
+
+                    <span class="payment-amount">
+                        ${{ cash_total }}
+                    </span>
+
+                </div>
+
+                <div class="payment-item">
+
+                    <span>
+                        📱 Zaad
+                    </span>
+
+                    <span class="payment-amount">
+                        ${{ zaad_total }}
+                    </span>
+
+                </div>
+
+                <div class="payment-item">
+
+                    <span>
+                        📱 eDahab
+                    </span>
+
+                    <span class="payment-amount">
+                        ${{ edahab_total }}
+                    </span>
+
+                </div>
+
+                <div class="payment-item">
+
+                    <span>
+                        💳 Mastercard
+                    </span>
+
+                    <span class="payment-amount">
+                        ${{ mastercard_total }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ORDERS -->
+        <div class="col-md-7 mb-4">
+
+            <div class="glass-box"
+                 data-aos="fade-left">
+
+                <h3 class="section-title">
+                    📋 Today's Orders
+                </h3>
+
+                {% if today_orders %}
+
+                <div style="max-height:400px; overflow-y:auto;">
+
+                    <table class="table custom-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Customer</th>
+
+                                <th>Table</th>
+
+                                <th>Waiter</th>
+
+                                <th>Total</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            {% for order in today_orders %}
+
+                            <tr>
+
+                                <td>
+
+                                    {{ order.customer_name }}
+
+                                </td>
+
+                                <td>
+
+                                    {{ order.table }}
+
+                                </td>
+
+                                <td>
+
+                                    {{ order.waiter }}
+
+                                </td>
+
+                                <td class="price">
+
+                                    ${{ order.total_price }}
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                {% else %}
+
+                <div class="empty-text">
+
+                    <div style="font-size:70px;">
+                        📭
+                    </div>
+
+                    <h4 class="mt-3">
+                        No Orders Today Yet
+                    </h4>
+
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- PRINT -->
+    <div class="text-center mb-5">
+
+        <button onclick="window.print()"
+                class="print-btn">
+
+            Print Report 🖨️
+
+        </button>
+
+    </div>
+
 </div>
 
-<!-- Summary Cards -->
-<div class="row mb-4">
-    <div class="col-md-3 mb-3">
-        <div class="card p-4 text-center" style="border-left: 4px solid #c0392b;">
-            <h2 style="color:#c0392b;">{{ total_orders }}</h2>
-            <p class="text-muted mb-0">Total Orders</p>
-        </div>
-    </div>
-    <div class="col-md-3 mb-3">
-        <div class="card p-4 text-center" style="border-left: 4px solid #27ae60;">
-            <h2 style="color:#27ae60;">${{ total_money }}</h2>
-            <p class="text-muted mb-0">Total Revenue</p>
-        </div>
-    </div>
-    <div class="col-md-3 mb-3">
-        <div class="card p-4 text-center" style="border-left: 4px solid #f39c12;">
-            <h2 style="color:#f39c12;">💵 ${{ cash_total }}</h2>
-            <p class="text-muted mb-0">Cash</p>
-        </div>
-    </div>
-    <div class="col-md-3 mb-3">
-        <div class="card p-4 text-center" style="border-left: 4px solid #3498db;">
-            <h2 style="color:#3498db;">📱 ${{ zaad_total }}</h2>
-            <p class="text-muted mb-0">Zaad</p>
-        </div>
-    </div>
-</div>
+<!-- AOS -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 
-<!-- Payment Methods -->
-<div class="row mb-4">
-    <div class="col-md-6 mb-3">
-        <div class="card p-4">
-            <h5 class="fw-bold mb-3">💳 Payment Methods</h5>
-            <div class="d-flex justify-content-between p-2 mb-2" style="background:#f8f9fa; border-radius:8px;">
-                <span>💵 Cash</span>
-                <strong>${{ cash_total }}</strong>
-            </div>
-            <div class="d-flex justify-content-between p-2 mb-2" style="background:#f8f9fa; border-radius:8px;">
-                <span>📱 Zaad</span>
-                <strong>${{ zaad_total }}</strong>
-            </div>
-            <div class="d-flex justify-content-between p-2 mb-2" style="background:#f8f9fa; border-radius:8px;">
-                <span>📱 eDahab</span>
-                <strong>${{ edahab_total }}</strong>
-            </div>
-            <div class="d-flex justify-content-between p-2" style="background:#f8f9fa; border-radius:8px;">
-                <span>💳 Mastercard</span>
-                <strong>${{ mastercard_total }}</strong>
-            </div>
-        </div>
-    </div>
+<script>
 
-    <div class="col-md-6 mb-3">
-        <div class="card p-4">
-            <h5 class="fw-bold mb-3">📋 Today's Orders</h5>
-            {% if today_orders %}
-            <div style="max-height:300px; overflow-y:auto;">
-            <table class="table table-sm">
-                <thead>
-                    <tr>
-                        <th>Customer</th>
-                        <th>Table</th>
-                        <th>Waiter</th>
-                        <th>Total</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for order in today_orders %}
-                    <tr>
-                        <td>{{ order.customer_name }}</td>
-                        <td>{{ order.table }}</td>
-                        <td>{{ order.waiter }}</td>
-                        <td style="color:#c0392b;">${{ order.total_price }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            </div>
-            {% else %}
-            <p class="text-muted text-center mt-4">No orders today yet!</p>
-            {% endif %}
-        </div>
-    </div>
-</div>
+AOS.init({
+    duration:1200,
+    once:false,
+});
 
-<div class="text-center mt-2">
-    <button onclick="window.print()" class="btn btn-success btn-lg">
-        Print Report 🖨️
-    </button>
-</div>
+</script>
 
 {% endblock %}
