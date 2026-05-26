@@ -446,5 +446,23 @@ AOS.init({
 });
 
 </script>
+<div class="text-center mt-5">
+    <a href="/dashboard/" class="btn btn-primary btn-lg me-3">
+        Waiter Dashboard 👤
+    </a>
+    <a href="/orders/" class="btn btn-warning btn-lg me-3">
+        All Orders 📋
+    </a>
+    <a href="/report/" class="btn btn-success btn-lg me-3">
+        Daily Report 📊
+    </a>
+    <a href="/search/" class="btn btn-dark btn-lg me-3">
+        Search 🔍
+    </a>
+    <a href="/reset-menu/" class="btn btn-danger btn-lg"
+       onclick="return confirm('Reset all menu items to available?')">
+        Reset Menu 🔄
+    </a>
+</div>
 
 {% endblock %}

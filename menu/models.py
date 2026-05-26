@@ -30,6 +30,14 @@ class MenuItem(models.Model):
     available = models.BooleanField(default=True)
     image = models.URLField(blank=True, null=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
+    daily_limit = models.IntegerField(default=0)  # 0 = no limit
+    daily_sold = models.IntegerField(default=0)   # how many sold today
+    last_reset = models.DateField(null=True, blank=True)  # last reset date
+
+    def is_available_today(self):
+        if self.daily_limit == 0:
+            return self.available
+        return self.available and self.daily_sold < self.daily_limit
 
     def __str__(self):
         return f"{self.name} - ${self.price}"

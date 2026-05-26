@@ -33,26 +33,40 @@
             <h5 class="fw-bold mb-3">Select Items</h5>
             <div class="row" id="menu-items">
                 {% for item in menu_items %}
-                <div class="col-md-4 col-6 mb-3 menu-item-card" data-category="{{ item.category.id }}">
-                    <div class="card">
-                        {% if item.image %}
-                        <img src="{{ item.image }}" class="card-img-top" style="height:120px; object-fit:cover; border-radius:16px 16px 0 0;">
-                        {% else %}
-                        <div style="height:120px; background:linear-gradient(135deg,#c0392b,#f39c12); border-radius:16px 16px 0 0; display:flex; align-items:center; justify-content:center; font-size:36px;">🍽️</div>
-                        {% endif %}
-                        <div class="card-body p-2">
-                            <h6 class="fw-bold mb-1">{{ item.name }}</h6>
-                            <p class="mb-2" style="color:#c0392b; font-weight:600;">${{ item.price }}</p>
-                            <input type="hidden" name="item_ids" value="{{ item.id }}">
-                            <div class="input-group input-group-sm">
-                                <button type="button" class="btn btn-outline-danger" onclick="decrease(this)">-</button>
-                                <input type="number" name="quantities" value="0" min="0" class="form-control text-center qty-input" onchange="updateTotal()">
-                                <button type="button" class="btn btn-outline-success" onclick="increase(this)">+</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
+<div class="col-md-4 col-6 mb-3 menu-item-card" data-category="{{ item.category.id }}">
+    <div class="card {% if not item.available %}opacity-50{% endif %}">
+        {% if item.image %}
+        <img src="{{ item.image }}" class="card-img-top" style="height:120px; object-fit:cover; border-radius:16px 16px 0 0;">
+        {% else %}
+        <div style="height:120px; background:linear-gradient(135deg,#c0392b,#f39c12); border-radius:16px 16px 0 0; display:flex; align-items:center; justify-content:center; font-size:36px;">🍽️</div>
+        {% endif %}
+        <div class="card-body p-2">
+            <h6 class="fw-bold mb-1">{{ item.name }}</h6>
+            <p class="mb-2" style="color:#c0392b; font-weight:600;">${{ item.price }}</p>
+            
+            {% if item.available %}
+            <input type="hidden" name="item_ids" value="{{ item.id }}">
+            <div class="input-group input-group-sm mb-2">
+                <button type="button" class="btn btn-outline-danger" onclick="decrease(this)">-</button>
+                <input type="number" name="quantities" value="0" min="0" class="form-control text-center qty-input" onchange="updateTotal()">
+                <button type="button" class="btn btn-outline-success" onclick="increase(this)">+</button>
+            </div>
+            <a href="/item-finished/{{ item.id }}/?waiter={{ waiter.username }}&table={{ table.number }}" 
+               class="btn btn-warning btn-sm w-100"
+               onclick="return confirm('Mark {{ item.name }} as finished?')">
+                Mark Finished ❌
+            </a>
+            {% else %}
+            <input type="hidden" name="item_ids" value="{{ item.id }}">
+            <input type="hidden" name="quantities" value="0">
+            <div class="text-center p-2" style="background:#fee; border-radius:8px;">
+                <span style="color:#c0392b;">❌ Finished Today</span>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endfor %}
             </div>
 
             <div class="card p-4 mt-3">

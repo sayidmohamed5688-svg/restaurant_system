@@ -175,3 +175,13 @@ def daily_report(request):
         'mastercard_total': mastercard_total,
         'today': today,
     })
+def mark_item_finished(request, item_id):
+    item = MenuItem.objects.get(id=item_id)
+    item.available = False
+    item.save()
+    waiter_username = request.GET.get('waiter', '')
+    return redirect(f'/take-order/{request.GET.get("table", 1)}/?waiter={waiter_username}')
+
+def reset_menu(request):
+    MenuItem.objects.all().update(available=True, daily_sold=0)
+    return redirect('/')
