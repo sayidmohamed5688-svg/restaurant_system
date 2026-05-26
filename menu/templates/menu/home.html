@@ -4,51 +4,188 @@
 
 {% block content %}
 
+<style>
+    body{
+        background: #111;
+    }
+
+    .page-title{
+        color: white;
+        font-weight: bold;
+        animation: fadeDown 1s ease;
+    }
+
+    .restaurant-subtitle{
+        animation: fadeUp 1.2s ease;
+    }
+
+    .food-card{
+        border: none;
+        border-radius: 18px;
+        overflow: hidden;
+        background: #1c1c1c;
+        color: white;
+        transition: 0.4s ease;
+        animation: zoomIn 0.8s ease;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    .food-card:hover{
+        transform: translateY(-10px) scale(1.03);
+        box-shadow: 0 15px 35px rgba(255, 140, 0, 0.4);
+    }
+
+    .food-img{
+        height: 180px;
+        object-fit: cover;
+        transition: 0.5s ease;
+    }
+
+    .food-card:hover .food-img{
+        transform: scale(1.1);
+    }
+
+    .food-placeholder{
+        height:180px;
+        background: linear-gradient(135deg, #c0392b, #f39c12);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-size:50px;
+    }
+
+    .food-price{
+        color: #ff914d;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .custom-btn{
+        border-radius: 50px;
+        padding: 12px 28px;
+        font-weight: bold;
+        transition: 0.3s ease;
+        animation: fadeUp 1s ease;
+    }
+
+    .custom-btn:hover{
+        transform: scale(1.08);
+    }
+
+    @keyframes fadeDown{
+        from{
+            opacity:0;
+            transform: translateY(-40px);
+        }
+        to{
+            opacity:1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeUp{
+        from{
+            opacity:0;
+            transform: translateY(40px);
+        }
+        to{
+            opacity:1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes zoomIn{
+        from{
+            opacity:0;
+            transform: scale(0.8);
+        }
+        to{
+            opacity:1;
+            transform: scale(1);
+        }
+    }
+</style>
+
 <div class="text-center mb-5">
-    <h1 class="page-title" style="font-size: 48px;">🍽️ Sayid's Restaurant</h1>
-    <p class="text-muted fs-5">Best food in hargeisa!</p>
+    <h1 class="page-title" style="font-size: 48px;">
+        🍽️ Sayid's Restaurant
+    </h1>
+
+    <p class="text-muted fs-5 restaurant-subtitle">
+        Best food in hargeisa!
+    </p>
 </div>
 
 {% for category in categories %}
-<h3 class="page-title mt-4 mb-3">{{ category.name }}</h3>
+
+<h3 class="page-title mt-4 mb-3">
+    {{ category.name }}
+</h3>
+
 <div class="row">
     {% for item in category.menuitem_set.all %}
     {% if item.available %}
+
     <div class="col-md-3 col-6 mb-4">
-        <div class="card h-100">
+
+        <div class="card food-card h-100">
+
             {% if item.image %}
-            <img src="{{ item.image }}" class="card-img-top" style="height: 180px; object-fit: cover; border-radius: 16px 16px 0 0;">
+
+            <div style="overflow:hidden;">
+                <img 
+                    src="{{ item.image }}" 
+                    class="card-img-top food-img"
+                >
+            </div>
+
             {% else %}
-            <div style="height:180px; background: linear-gradient(135deg, #c0392b, #f39c12); border-radius: 16px 16px 0 0; display:flex; align-items:center; justify-content:center; font-size:50px;">
+
+            <div class="food-placeholder">
                 🍽️
             </div>
+
             {% endif %}
+
             <div class="card-body p-3">
-                <h6 class="fw-bold">{{ item.name }}</h6>
-                <p class="mb-0" style="color: #c0392b; font-weight: 600; font-size: 18px;">${{ item.price }}</p>
+
+                <h6 class="fw-bold">
+                    {{ item.name }}
+                </h6>
+
+                <p class="mb-0 food-price">
+                    ${{ item.price }}
+                </p>
+
             </div>
         </div>
+
     </div>
+
     {% endif %}
     {% endfor %}
 </div>
+
 {% endfor %}
 
 <div class="text-center mt-5">
-    <a href="/dashboard/" class="btn btn-primary btn-lg me-3">
+
+    <a href="/dashboard/" class="btn btn-primary btn-lg me-3 custom-btn">
         Waiter Dashboard 👤
     </a>
-    <a href="/orders/" class="btn btn-warning btn-lg me-3">
+
+    <a href="/orders/" class="btn btn-warning btn-lg me-3 custom-btn">
         All Orders 📋
     </a>
-    <a href="/report/" class="btn btn-success btn-lg me-3">
+
+    <a href="/report/" class="btn btn-success btn-lg me-3 custom-btn">
         Daily Report 📊
     </a>
-    <a href="/search/" class="btn btn-dark btn-lg">
+
+    <a href="/search/" class="btn btn-dark btn-lg custom-btn">
         Search 🔍
     </a>
+
 </div>
-
-
 
 {% endblock %}
