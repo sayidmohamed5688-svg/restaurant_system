@@ -88,48 +88,50 @@ h1,h2,h3,h4,h5,h6,p,span,td,th,a{
     font-size:18px;
     font-weight:500;
 }
-
 /* TABLE CONTAINER */
-.table-box{
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.15);
-    backdrop-filter:blur(18px);
-    border-radius:28px;
-    overflow:hidden;
-    box-shadow:0 25px 60px rgba(0,0,0,.6);
+.table-box {
+    /* Changed from white rgba to dark rgba so white text is visible */
+    background: rgba(18, 18, 18, 0.75); 
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px); /* Support for Safari */
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
 }
 
 /* TABLE */
-.custom-table{
-    width:100%;
-    color:#fff;
+.custom-table {
+    width: 100%;
+    color: #ffffff;
+    border-collapse: collapse;
 }
 
-.custom-table thead{
-    background:linear-gradient(90deg,#ff0066,#ffb300);
-}
-
-.custom-table thead th{
-    padding:18px;
-    font-weight:900;
-    color:#fff;
-    text-align:left;
+/* HEADERS */
+.custom-table thead th {
+    padding: 18px;
+    font-weight: 900;
+    color: #ffffff !important;
+    text-align: left;
 }
 
 /* ROWS */
-.custom-table tbody tr{
-    background:rgba(255,255,255,.02);
-    transition:.3s ease;
+.custom-table tbody tr {
+    /* Gives rows a very slight dark tint */
+    background: rgba(0, 0, 0, 0.2); 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: .3s ease;
 }
 
-.custom-table tbody tr:hover{
-    background:rgba(255,255,255,.12);
+.custom-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.08);
 }
 
 /* CELLS */
-.custom-table tbody td{
-    padding:18px;
-    font-weight:600;
+.custom-table tbody td {
+    padding: 18px;
+    font-weight: 600;
+    color: #ffffff !important;
 }
 
 /* BADGE */

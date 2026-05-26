@@ -153,36 +153,50 @@ h1,h2,h3,h4,h5,h6,p,span,td,th{
     color:#ffb300 !important;
     font-weight:800;
 }
-
 /* ================= TABLE ================= */
-.custom-table{
-    width:100%;
-    color:#fff;
+.custom-table {
+    width: 100%;
+    color: #ffffff !important;
+    border-collapse: collapse;
+    background: transparent !important; /* Forces Bootstrap to stop injecting light backgrounds */
 }
 
-.custom-table thead{
-    background:linear-gradient(90deg,#ff0066,#ffb300);
+.custom-table thead {
+    background: linear-gradient(90deg, #ff0066, #ffb300) !important;
 }
 
-.custom-table thead th{
-    padding:18px;
-    font-weight:900;
-    color:#fff !important;
+.custom-table thead th {
+    padding: 18px;
+    font-weight: 900;
+    color: #ffffff !important;
+    border: none !important;
 }
 
-.custom-table tbody tr{
-    background:rgba(255,255,255,.03);
-    transition:.3s;
+.custom-table tbody tr {
+    /* Gives each row a clear dark background mask over the glass blur */
+    background: rgba(0, 0, 0, 0.4) !important; 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+    transition: .3s ease;
 }
 
-.custom-table tbody tr:hover{
-    background:rgba(255,255,255,.10);
+.custom-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
 }
 
-.custom-table tbody td{
-    padding:16px;
-    font-weight:600;
-    color:#fff !important;
+.custom-table tbody td {
+    padding: 16px;
+    font-weight: 600;
+    color: #ffffff !important;
+    border: none !important; /* Cleans up Bootstrap's default light border lines */
+}
+
+/* Also handle the empty text container if no orders exist */
+.empty-text {
+    text-align: center;
+    padding: 50px;
+    color: #ffffff !important;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 14px;
 }
 
 /* ================= PRINT BUTTON ================= */
