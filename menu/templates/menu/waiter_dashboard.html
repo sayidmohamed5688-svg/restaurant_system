@@ -4,54 +4,266 @@
 
 {% block content %}
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+<style>
+
+/* GLOBAL */
+*{
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:
+    radial-gradient(circle at top left, rgba(255,120,0,.18), transparent 40%),
+    radial-gradient(circle at bottom right, rgba(255,0,100,.15), transparent 40%),
+    #0a0a0a;
+    overflow-x:hidden;
+    color:white;
+}
+
+/* HEADER */
+.page-title{
+    font-size:52px;
+    font-weight:900;
+    background:linear-gradient(90deg,#ffb300,#ff0066,#ffffff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:fadeDown 1.2s ease;
+}
+
+@keyframes fadeDown{
+    from{
+        opacity:0;
+        transform:translateY(-30px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.text-muted{
+    color:#cfcfcf !important;
+}
+
+/* CARD DESIGN */
+.waiter-card{
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.12);
+    backdrop-filter:blur(18px);
+    border-radius:22px;
+    padding:25px;
+    transition:.4s ease;
+    box-shadow:0 15px 40px rgba(0,0,0,.5);
+    position:relative;
+    overflow:hidden;
+}
+
+.waiter-card:hover{
+    transform:translateY(-10px) scale(1.03);
+}
+
+/* LIGHT EFFECT */
+.waiter-card::before{
+    content:'';
+    position:absolute;
+    width:100%;
+    height:100%;
+    left:-100%;
+    top:0;
+    background:linear-gradient(120deg,transparent,rgba(255,255,255,.08),transparent);
+    transition:.8s;
+}
+
+.waiter-card:hover::before{
+    left:100%;
+}
+
+/* AVATAR */
+.avatar{
+    width:85px;
+    height:85px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#ff0066,#ffb300);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 15px;
+    font-size:38px;
+    box-shadow:0 10px 25px rgba(255,100,0,.3);
+}
+
+/* NAME */
+.waiter-name{
+    color:#fff;
+    font-weight:800;
+    font-size:20px;
+}
+
+/* BUTTON */
+.view-btn{
+    display:inline-block;
+    margin-top:10px;
+    padding:8px 16px;
+    border-radius:30px;
+    background:linear-gradient(90deg,#007bff,#00c6ff);
+    color:white;
+    font-weight:700;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.view-btn:hover{
+    transform:scale(1.05);
+}
+
+/* CONTACT SECTION */
+.contact-box{
+    margin-top:50px;
+    text-align:center;
+}
+
+.contact-title{
+    color:#d0d0d0;
+    margin-bottom:20px;
+    font-weight:600;
+}
+
+/* CONTACT BUTTONS */
+.contact-btn{
+    padding:14px 22px;
+    border-radius:50px;
+    font-weight:700;
+    transition:.3s;
+    text-decoration:none;
+    display:inline-block;
+}
+
+.contact-btn:hover{
+    transform:translateY(-5px);
+}
+
+/* FOOTER TEXT */
+.footer-text{
+    color:#bdbdbd;
+    font-size:13px;
+    margin-top:20px;
+}
+
+/* FLOAT GLOW */
+.glow{
+    position:fixed;
+    width:300px;
+    height:300px;
+    border-radius:50%;
+    filter:blur(160px);
+    opacity:.18;
+    z-index:-1;
+}
+
+.glow1{background:#ff8800; top:-100px; right:-80px;}
+.glow2{background:#ff0066; bottom:-100px; left:-80px;}
+
+</style>
+
+<div class="glow glow1"></div>
+<div class="glow glow2"></div>
+
+<!-- HEADER -->
 <div class="text-center mb-5">
+
     <h1 class="page-title">👋 Select Your Name</h1>
-    <p class="text-muted">Choose your name to see your tables</p>
+
+    <p class="text-muted">
+        Choose your name to see your tables
+    </p>
+
 </div>
 
-<div class="row justify-content-center">
-{% for waiter in waiters %}
-<div class="col-md-4 mb-4">
-    <a href="/waiter/{{ waiter.username }}/" class="text-decoration-none">
-        <div class="card text-center p-4">
-            <div style="width:80px; height:80px; border-radius:50%; background:linear-gradient(135deg,#c0392b,#f39c12); display:flex; align-items:center; justify-content:center; margin:0 auto 15px; font-size:36px;">
-                👤
-            </div>
-            <h4 style="color:#c0392b; font-weight:600;">{{ waiter.username }}</h4>
-            <p style="color:#7f8c8d; font-size:13px;">Click to see your tables</p>
-            <span class="btn btn-primary btn-sm mt-2">View Tables →</span>
+<!-- WAITER CARDS -->
+<div class="container">
+
+    <div class="row justify-content-center">
+
+        {% for waiter in waiters %}
+
+        <div class="col-md-4 mb-4" data-aos="zoom-in">
+
+            <a href="/waiter/{{ waiter.username }}/" class="text-decoration-none">
+
+                <div class="waiter-card text-center">
+
+                    <div class="avatar">
+                        👤
+                    </div>
+
+                    <div class="waiter-name">
+                        {{ waiter.username }}
+                    </div>
+
+                    <p class="text-muted" style="font-size:13px;">
+                        Click to see your tables
+                    </p>
+
+                    <span class="view-btn">
+                        View Tables →
+                    </span>
+
+                </div>
+
+            </a>
+
         </div>
-    </a>
-</div>
-{% endfor %}
+
+        {% endfor %}
+
+    </div>
+
 </div>
 
-<hr class="mt-5">
+<hr class="mt-5" style="border-color:rgba(255,255,255,.1);">
 
-<!-- Contact Section -->
-<div class="text-center mt-4 mb-4">
-    <h5 class="text-muted mb-3">Contact & Support</h5>
+<!-- CONTACT -->
+<div class="contact-box">
+
+    <h5 class="contact-title">
+        Contact & Support
+    </h5>
+
     <div class="d-flex justify-content-center gap-3 flex-wrap">
-        
-        <a href="https://wa.me/252638430345" target="_blank" 
-           class="btn btn-success btn-lg">
+
+        <a href="https://wa.me/252638430345" target="_blank"
+           class="contact-btn btn btn-success">
             📱 WhatsApp
         </a>
-        
-        <a href="mailto:sayidmohamed5688@gmail.com" 
-           class="btn btn-danger btn-lg">
+
+        <a href="mailto:sayidmohamed5688@gmail.com"
+           class="contact-btn btn btn-danger">
             📧 Gmail
         </a>
-        
+
         <a href="https://www.facebook.com/sayyed.mohammed.ali" target="_blank"
-           class="btn btn-primary btn-lg">
+           class="contact-btn btn btn-primary">
             📘 Facebook
         </a>
-        
+
     </div>
-    <p class="text-muted mt-3" style="font-size:13px;">
+
+    <p class="footer-text">
         Built by Sayid Mohamed Ali — Hargeisa, Somaliland 🇸🇴
     </p>
+
 </div>
+
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+AOS.init({
+    duration:1000,
+    once:false
+});
+</script>
 
 {% endblock %}
