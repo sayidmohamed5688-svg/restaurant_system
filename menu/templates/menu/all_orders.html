@@ -4,38 +4,367 @@
 
 {% block content %}
 
-<h2 class="mb-4">All Orders</h2>
+<!-- GOOGLE FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-<table class="table table-striped">
-    <thead class="table-danger">
-        <tr>
-            <th>Customer</th>
-            <th>Item</th>
-            <th>Quantity</th>
-            <th>Date</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for order in orders %}
-        <tr>
-            <td>{{ order.customer_name }}</td>
-            <td>{{ order.item }}</td>
-            <td>{{ order.quantity }}</td>
-            <td>{{ order.date }}</td>
-            <td>
-                <a href="/edit/{{ order.pk }}/" 
-                   class="btn btn-warning btn-sm me-2">
-                    Edit ✏️
-                </a>
-                <a href="/delete/{{ order.pk }}/" 
-                   class="btn btn-danger btn-sm">
-                    Delete 🗑️
-                </a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<!-- AOS -->
+<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+<style>
+
+*{
+    font-family: 'Poppins', sans-serif;
+}
+
+body{
+    background:
+    radial-gradient(circle at top left, rgba(255,120,0,.15), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(255,0,100,.12), transparent 30%),
+    #0b0b0b;
+    overflow-x:hidden;
+}
+
+/* GLOW EFFECT */
+.glow{
+    position:fixed;
+    width:300px;
+    height:300px;
+    background:#ff7b00;
+    filter:blur(150px);
+    opacity:.18;
+    z-index:-1;
+    animation:moveGlow 10s infinite alternate ease-in-out;
+}
+
+.glow2{
+    right:0;
+    bottom:0;
+    background:#ff0066;
+    animation-delay:2s;
+}
+
+@keyframes moveGlow{
+    from{
+        transform:translateY(-40px);
+    }
+    to{
+        transform:translateY(40px);
+    }
+}
+
+/* FLOAT ICONS */
+.float-icon{
+    position:fixed;
+    font-size:40px;
+    opacity:.12;
+    z-index:-1;
+    animation:float 6s infinite ease-in-out;
+}
+
+.icon1{
+    top:20%;
+    left:5%;
+}
+
+.icon2{
+    bottom:15%;
+    right:6%;
+    animation-delay:2s;
+}
+
+@keyframes float{
+    0%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-25px);
+    }
+    100%{
+        transform:translateY(0);
+    }
+}
+
+/* HEADER */
+.orders-header{
+    text-align:center;
+    padding:50px 0 30px;
+}
+
+.orders-title{
+    font-size:65px;
+    font-weight:800;
+    background:linear-gradient(90deg,#ff9900,#ff0066,#ffffff);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    animation:zoomTitle 1.4s ease;
+}
+
+@keyframes zoomTitle{
+    from{
+        opacity:0;
+        transform:scale(.5);
+    }
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+}
+
+.orders-subtitle{
+    color:#bbb;
+    font-size:20px;
+    margin-top:15px;
+    animation:fadeUp 1.4s ease;
+}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(40px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* TABLE CONTAINER */
+.table-box{
+    background:rgba(255,255,255,.05);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:30px;
+    overflow:hidden;
+    box-shadow:0 20px 50px rgba(0,0,0,.4);
+    animation:fadeUp 1.5s ease;
+}
+
+/* TABLE */
+.custom-table{
+    margin:0;
+    color:white;
+}
+
+.custom-table thead{
+    background:linear-gradient(90deg,#ff0066,#ff9900);
+}
+
+.custom-table thead th{
+    border:none;
+    padding:20px;
+    font-size:17px;
+    font-weight:700;
+    color:white;
+}
+
+.custom-table tbody tr{
+    transition:.4s ease;
+    border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+.custom-table tbody tr:hover{
+    background:rgba(255,255,255,.08);
+    transform:scale(1.01);
+}
+
+.custom-table tbody td{
+    padding:22px 18px;
+    vertical-align:middle;
+    color:#eee;
+    font-weight:500;
+}
+
+/* BADGES */
+.quantity-badge{
+    background:linear-gradient(90deg,#ff9900,#ff0066);
+    padding:8px 15px;
+    border-radius:50px;
+    font-size:14px;
+    font-weight:700;
+    display:inline-block;
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+    0%{
+        transform:scale(1);
+    }
+    50%{
+        transform:scale(1.08);
+    }
+    100%{
+        transform:scale(1);
+    }
+}
+
+/* BUTTONS */
+.action-btn{
+    border:none;
+    border-radius:50px;
+    padding:10px 18px;
+    font-weight:700;
+    transition:.4s ease;
+    position:relative;
+    overflow:hidden;
+}
+
+.action-btn::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:rgba(255,255,255,.18);
+    transform:translateX(-100%);
+    transition:.5s;
+}
+
+.action-btn:hover::before{
+    transform:translateX(100%);
+}
+
+.action-btn:hover{
+    transform:translateY(-5px) scale(1.05);
+}
+
+/* EMPTY STATE */
+.empty-box{
+    text-align:center;
+    padding:80px 20px;
+    color:#bbb;
+}
+
+.empty-box h3{
+    font-size:35px;
+    margin-top:15px;
+}
+
+</style>
+
+<div class="glow"></div>
+<div class="glow glow2"></div>
+
+<div class="float-icon icon1">📋</div>
+<div class="float-icon icon2">🍽️</div>
+
+<!-- HEADER -->
+<div class="orders-header">
+
+    <h1 class="orders-title">
+        📋 All Orders
+    </h1>
+
+    <p class="orders-subtitle">
+        Manage all customer restaurant orders beautifully
+    </p>
+
+</div>
+
+<!-- TABLE -->
+<div class="container">
+
+    <div class="table-box" data-aos="zoom-in">
+
+        {% if orders %}
+
+        <div class="table-responsive">
+
+            <table class="table custom-table align-middle">
+
+                <thead>
+                    <tr>
+                        <th>👤 Customer</th>
+                        <th>🍔 Item</th>
+                        <th>🔥 Quantity</th>
+                        <th>📅 Date</th>
+                        <th>⚡ Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for order in orders %}
+
+                    <tr data-aos="fade-up" data-aos-delay="100">
+
+                        <td>
+                            {{ order.customer_name }}
+                        </td>
+
+                        <td>
+                            {{ order.item }}
+                        </td>
+
+                        <td>
+                            <span class="quantity-badge">
+                                x{{ order.quantity }}
+                            </span>
+                        </td>
+
+                        <td>
+                            {{ order.date }}
+                        </td>
+
+                        <td>
+
+                            <a href="/edit/{{ order.pk }}/"
+                               class="btn btn-warning action-btn me-2">
+
+                                Edit ✏️
+
+                            </a>
+
+                            <a href="/delete/{{ order.pk }}/"
+                               class="btn btn-danger action-btn">
+
+                                Delete 🗑️
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <div class="empty-box">
+
+            <div style="font-size:80px;">
+                📭
+            </div>
+
+            <h3>
+                No Orders Yet
+            </h3>
+
+            <p>
+                Customer orders will appear here.
+            </p>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<!-- AOS -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+
+<script>
+
+AOS.init({
+    duration:1000,
+    once:false,
+});
+
+</script>
 
 {% endblock %}
