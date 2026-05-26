@@ -4,330 +4,103 @@
 
 {% block content %}
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-
-<style>
-
-/* ================= GLOBAL ================= */
-*{
-    font-family:'Poppins',sans-serif;
-    color:#ffffff;
-}
-
-body{
-    background:
-    radial-gradient(circle at top right, rgba(255,140,0,.22), transparent 40%),
-    radial-gradient(circle at bottom left, rgba(255,0,80,.18), transparent 40%),
-    #050505;
-    overflow-x:hidden;
-}
-
-/* FORCE READABILITY */
-h1,h2,h3,h4,h5,h6,p,span,td,th{
-    color:#ffffff !important;
-}
-
-/* MUTED TEXT */
-.report-date,
-.report-label{
-    color:#d6d6d6 !important;
-    font-weight:500;
-}
-
-/* ================= SCROLLBAR ================= */
-::-webkit-scrollbar{
-    width:10px;
-}
-::-webkit-scrollbar-thumb{
-    background:linear-gradient(#ffb300,#ff0066);
-    border-radius:20px;
-}
-
-/* ================= BACKGROUND GLOW ================= */
-.glow{
-    position:fixed;
-    width:380px;
-    height:380px;
-    border-radius:50%;
-    filter:blur(180px);
-    opacity:.25;
-    z-index:-1;
-}
-
-.orange{
-    background:#ff8a00;
-    top:-120px;
-    right:-60px;
-}
-
-.pink{
-    background:#ff0066;
-    bottom:-120px;
-    left:-60px;
-}
-
-/* ================= HEADER ================= */
-.report-header{
-    padding:60px 0 30px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    flex-wrap:wrap;
-}
-
-.report-title{
-    font-size:64px;
-    font-weight:900;
-    background:linear-gradient(90deg,#ffb300,#ff0066,#ffffff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-}
-
-.home-btn{
-    padding:14px 28px;
-    border-radius:60px;
-    font-weight:700;
-    background:#1f1f1f;
-    color:#fff !important;
-    text-decoration:none;
-    transition:.3s;
-}
-
-.home-btn:hover{
-    background:#2c2c2c;
-    transform:translateY(-3px);
-}
-
-/* ================= CARDS ================= */
-.report-card{
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.15);
-    border-radius:28px;
-    padding:30px;
-    backdrop-filter:blur(18px);
-    transition:.3s;
-}
-
-.report-card:hover{
-    transform:translateY(-8px);
-}
-
-.report-number{
-    font-size:42px;
-    font-weight:900;
-}
-
-.report-label{
-    font-size:14px;
-    color:#d6d6d6 !important;
-}
-
-/* ================= GLASS BOX ================= */
-.glass-box{
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.15);
-    border-radius:30px;
-    padding:30px;
-    backdrop-filter:blur(20px);
-}
-
-/* ================= SECTION TITLE ================= */
-.section-title{
-    font-size:24px;
-    font-weight:800;
-    margin-bottom:20px;
-}
-
-/* ================= PAYMENT ================= */
-.payment-item{
-    background:rgba(255,255,255,.08);
-    padding:16px 18px;
-    border-radius:14px;
-    margin-bottom:12px;
-    display:flex;
-    justify-content:space-between;
-}
-
-.payment-amount{
-    color:#ffb300 !important;
-    font-weight:800;
-}
-/* ================= TABLE ================= */
-.custom-table {
-    width: 100%;
-    color: #ffffff !important;
-    border-collapse: collapse;
-    background: transparent !important; /* Forces Bootstrap to stop injecting light backgrounds */
-}
-
-.custom-table thead {
-    background: linear-gradient(90deg, #ff0066, #ffb300) !important;
-}
-
-.custom-table thead th {
-    padding: 18px;
-    font-weight: 900;
-    color: #ffffff !important;
-    border: none !important;
-}
-
-.custom-table tbody tr {
-    /* Gives each row a clear dark background mask over the glass blur */
-    background: rgba(0, 0, 0, 0.4) !important; 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-    transition: .3s ease;
-}
-
-.custom-table tbody tr:hover {
-    background: rgba(255, 255, 255, 0.12) !important;
-}
-
-.custom-table tbody td {
-    padding: 16px;
-    font-weight: 600;
-    color: #ffffff !important;
-    border: none !important; /* Cleans up Bootstrap's default light border lines */
-}
-
-/* Also handle the empty text container if no orders exist */
-.empty-text {
-    text-align: center;
-    padding: 50px;
-    color: #ffffff !important;
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 14px;
-}
-
-/* ================= PRINT BUTTON ================= */
-.print-btn{
-    margin-top:35px;
-    padding:16px 38px;
-    border:none;
-    border-radius:60px;
-    font-weight:800;
-    background:linear-gradient(90deg,#00c853,#00e676);
-    color:white;
-    transition:.3s;
-}
-
-.print-btn:hover{
-    transform:scale(1.05);
-}
-
-/* ================= EMPTY ================= */
-.empty-text{
-    text-align:center;
-    padding:50px;
-}
-
-/* ================= RESPONSIVE ================= */
-@media(max-width:768px){
-    .report-title{
-        font-size:42px;
-    }
-}
-
-</style>
-
-<div class="glow orange"></div>
-<div class="glow pink"></div>
-
-<div class="container">
+<div class="container py-4">
 
     <!-- HEADER -->
-    <div class="report-header">
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
 
         <div>
-            <h1 class="report-title">📊 Daily Report</h1>
-            <p class="report-date">{{ today }}</p>
+            <h2 class="fw-bold mb-1">📊 Daily Report</h2>
+            <p class="text-muted mb-0">{{ today }}</p>
         </div>
 
-        <a href="/" class="home-btn">← Home</a>
+        <a href="/" class="btn btn-dark px-4 py-2 rounded-pill">
+            ← Home
+        </a>
 
     </div>
 
-    <!-- CARDS -->
+    <!-- SUMMARY CARDS -->
     <div class="row mb-4">
 
-        <div class="col-md-3 mb-3">
-            <div class="report-card">
-                <div class="report-number">{{ total_orders }}</div>
-                <div class="report-label">Total Orders</div>
+        <div class="col-md-3 col-6 mb-3">
+            <div class="card shadow-sm p-3 text-center border-0">
+                <h3 class="fw-bold text-danger mb-1">{{ total_orders }}</h3>
+                <p class="text-muted mb-0">Total Orders</p>
             </div>
         </div>
 
-        <div class="col-md-3 mb-3">
-            <div class="report-card">
-                <div class="report-number">${{ total_money }}</div>
-                <div class="report-label">Total Revenue</div>
+        <div class="col-md-3 col-6 mb-3">
+            <div class="card shadow-sm p-3 text-center border-0">
+                <h3 class="fw-bold text-success mb-1">${{ total_money }}</h3>
+                <p class="text-muted mb-0">Total Revenue</p>
             </div>
         </div>
 
-        <div class="col-md-3 mb-3">
-            <div class="report-card">
-                <div class="report-number">${{ cash_total }}</div>
-                <div class="report-label">Cash Payment</div>
+        <div class="col-md-3 col-6 mb-3">
+            <div class="card shadow-sm p-3 text-center border-0">
+                <h3 class="fw-bold text-warning mb-1">${{ cash_total }}</h3>
+                <p class="text-muted mb-0">Cash</p>
             </div>
         </div>
 
-        <div class="col-md-3 mb-3">
-            <div class="report-card">
-                <div class="report-number">${{ zaad_total }}</div>
-                <div class="report-label">Zaad Payment</div>
+        <div class="col-md-3 col-6 mb-3">
+            <div class="card shadow-sm p-3 text-center border-0">
+                <h3 class="fw-bold text-primary mb-1">${{ zaad_total }}</h3>
+                <p class="text-muted mb-0">Zaad</p>
             </div>
         </div>
 
     </div>
 
-    <!-- TABLE + PAYMENT -->
+    <!-- CONTENT SECTION -->
     <div class="row">
 
-        <!-- PAYMENT -->
-        <div class="col-md-5 mb-4">
+        <!-- PAYMENT METHODS -->
+        <div class="col-md-6 mb-4">
 
-            <div class="glass-box">
+            <div class="card shadow-sm p-4 h-100">
 
-                <h3 class="section-title">💳 Payment Methods</h3>
+                <h5 class="fw-bold mb-3">💳 Payment Methods</h5>
 
-                <div class="payment-item">
+                <div class="d-flex justify-content-between p-2 mb-2 bg-light rounded">
                     <span>💵 Cash</span>
-                    <span class="payment-amount">${{ cash_total }}</span>
+                    <strong>${{ cash_total }}</strong>
                 </div>
 
-                <div class="payment-item">
+                <div class="d-flex justify-content-between p-2 mb-2 bg-light rounded">
                     <span>📱 Zaad</span>
-                    <span class="payment-amount">${{ zaad_total }}</span>
+                    <strong>${{ zaad_total }}</strong>
                 </div>
 
-                <div class="payment-item">
+                <div class="d-flex justify-content-between p-2 mb-2 bg-light rounded">
                     <span>📱 eDahab</span>
-                    <span class="payment-amount">${{ edahab_total }}</span>
+                    <strong>${{ edahab_total }}</strong>
                 </div>
 
-                <div class="payment-item">
+                <div class="d-flex justify-content-between p-2 bg-light rounded">
                     <span>💳 Mastercard</span>
-                    <span class="payment-amount">${{ mastercard_total }}</span>
+                    <strong>${{ mastercard_total }}</strong>
                 </div>
 
             </div>
 
         </div>
 
-        <!-- ORDERS -->
-        <div class="col-md-7 mb-4">
+        <!-- TODAY ORDERS -->
+        <div class="col-md-6 mb-4">
 
-            <div class="glass-box">
+            <div class="card shadow-sm p-4 h-100">
 
-                <h3 class="section-title">📋 Today's Orders</h3>
+                <h5 class="fw-bold mb-3">📋 Today's Orders</h5>
 
                 {% if today_orders %}
 
-                <div style="max-height:400px; overflow-y:auto;">
+                <div style="max-height:320px; overflow-y:auto;">
 
-                    <table class="table custom-table">
+                    <table class="table table-sm align-middle">
 
-                        <thead>
+                        <thead class="table-light">
                             <tr>
                                 <th>Customer</th>
                                 <th>Table</th>
@@ -339,14 +112,12 @@ h1,h2,h3,h4,h5,h6,p,span,td,th{
                         <tbody>
 
                             {% for order in today_orders %}
-
                             <tr>
-                                <td>{{ order.customer_name }}</td>
+                                <td class="fw-semibold">{{ order.customer_name }}</td>
                                 <td>{{ order.table }}</td>
                                 <td>{{ order.waiter }}</td>
-                                <td>${{ order.total_price }}</td>
+                                <td class="text-danger fw-bold">${{ order.total_price }}</td>
                             </tr>
-
                             {% endfor %}
 
                         </tbody>
@@ -357,9 +128,9 @@ h1,h2,h3,h4,h5,h6,p,span,td,th{
 
                 {% else %}
 
-                <div class="empty-text">
-                    📭 No Orders Today Yet
-                </div>
+                <p class="text-muted text-center mt-4">
+                    No orders today yet!
+                </p>
 
                 {% endif %}
 
@@ -369,18 +140,15 @@ h1,h2,h3,h4,h5,h6,p,span,td,th{
 
     </div>
 
-    <!-- PRINT -->
-    <div class="text-center">
-        <button onclick="window.print()" class="print-btn">
-            Print Report 🖨️
+    <!-- PRINT BUTTON -->
+    <div class="text-center mt-3">
+
+        <button onclick="window.print()" class="btn btn-success btn-lg px-5 rounded-pill shadow-sm">
+            🖨️ Print Report
         </button>
+
     </div>
 
 </div>
-
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script>
-AOS.init({ duration: 1000, once: false });
-</script>
 
 {% endblock %}

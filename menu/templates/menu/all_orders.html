@@ -4,264 +4,79 @@
 
 {% block content %}
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+<div class="container py-4">
 
-<style>
+    <!-- HEADER -->
+    <div class="mb-4">
+        <h2 class="fw-bold">📋 All Orders</h2>
+        <p class="text-muted mb-0">Manage customer orders easily</p>
+    </div>
 
-/* GLOBAL */
-*{
-    font-family:'Poppins',sans-serif;
-    color:#ffffff;
-}
+    <!-- TABLE CARD -->
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-0">
 
-body{
-    background:
-    radial-gradient(circle at top left, rgba(255,140,0,.20), transparent 45%),
-    radial-gradient(circle at bottom right, rgba(255,0,100,.18), transparent 45%),
-    #0a0a0a;
-    overflow-x:hidden;
-}
+            <div class="table-responsive">
 
-/* FORCE VISIBILITY */
-h1,h2,h3,h4,h5,h6,p,span,td,th,a{
-    color:#ffffff !important;
-}
+                <table class="table table-hover align-middle mb-0">
 
-/* BACK GLOW */
-.glow{
-    position:fixed;
-    width:350px;
-    height:350px;
-    border-radius:50%;
-    filter:blur(160px);
-    opacity:.25;
-    z-index:-1;
-}
+                    <thead class="table-danger">
+                        <tr>
+                            <th class="py-3">Customer</th>
+                            <th class="py-3">Item</th>
+                            <th class="py-3">Quantity</th>
+                            <th class="py-3">Date</th>
+                            <th class="py-3">Action</th>
+                        </tr>
+                    </thead>
 
-.glow1{
-    background:#ff8800;
-    top:-120px;
-    right:-80px;
-}
+                    <tbody>
 
-.glow2{
-    background:#ff0066;
-    bottom:-120px;
-    left:-80px;
-}
+                        {% for order in orders %}
+                        <tr>
 
-/* FLOAT ICONS */
-.float-icon{
-    position:fixed;
-    font-size:42px;
-    opacity:.10;
-    z-index:-1;
-    animation:float 6s infinite ease-in-out;
-}
+                            <td class="fw-semibold">
+                                {{ order.customer_name }}
+                            </td>
 
-.icon1{ top:18%; left:5%; }
-.icon2{ bottom:18%; right:5%; animation-delay:2s; }
+                            <td>
+                                {{ order.item }}
+                            </td>
 
-@keyframes float{
-    0%{transform:translateY(0);}
-    50%{transform:translateY(-20px);}
-    100%{transform:translateY(0);}
-}
+                            <td>
+                                <span class="badge bg-dark px-3 py-2">
+                                    {{ order.quantity }}
+                                </span>
+                            </td>
 
-/* HEADER */
-.orders-header{
-    text-align:center;
-    padding:60px 20px 30px;
-}
+                            <td class="text-muted">
+                                {{ order.date }}
+                            </td>
 
-.orders-title{
-    font-size:64px;
-    font-weight:900;
-    background:linear-gradient(90deg,#ffb300,#ff0066,#ffffff);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-}
+                            <td>
+                                <a href="/edit/{{ order.pk }}/" 
+                                   class="btn btn-warning btn-sm me-2 fw-semibold">
+                                    ✏️ Edit
+                                </a>
 
-.orders-subtitle{
-    color:#d0d0d0 !important;
-    font-size:18px;
-    font-weight:500;
-}
-/* TABLE CONTAINER */
-.table-box {
-    /* Changed from white rgba to dark rgba so white text is visible */
-    background: rgba(18, 18, 18, 0.75); 
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px); /* Support for Safari */
-    border-radius: 28px;
-    overflow: hidden;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
-}
+                                <a href="/delete/{{ order.pk }}/" 
+                                   class="btn btn-danger btn-sm fw-semibold">
+                                    🗑️ Delete
+                                </a>
+                            </td>
 
-/* TABLE */
-.custom-table {
-    width: 100%;
-    color: #ffffff;
-    border-collapse: collapse;
-}
+                        </tr>
+                        {% endfor %}
 
-/* HEADERS */
-.custom-table thead th {
-    padding: 18px;
-    font-weight: 900;
-    color: #ffffff !important;
-    text-align: left;
-}
+                    </tbody>
 
-/* ROWS */
-.custom-table tbody tr {
-    /* Gives rows a very slight dark tint */
-    background: rgba(0, 0, 0, 0.2); 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    transition: .3s ease;
-}
+                </table>
 
-.custom-table tbody tr:hover {
-    background: rgba(255, 255, 255, 0.08);
-}
-
-/* CELLS */
-.custom-table tbody td {
-    padding: 18px;
-    font-weight: 600;
-    color: #ffffff !important;
-}
-
-/* BADGE */
-.quantity-badge{
-    background:linear-gradient(90deg,#ffb300,#ff0066);
-    padding:7px 14px;
-    border-radius:30px;
-    font-weight:800;
-    color:#fff;
-}
-
-/* BUTTONS */
-.action-btn{
-    border:none;
-    border-radius:50px;
-    padding:10px 16px;
-    font-weight:700;
-    transition:.3s;
-}
-
-.action-btn:hover{
-    transform:scale(1.05);
-}
-
-/* EMPTY */
-.empty-box{
-    text-align:center;
-    padding:80px 20px;
-}
-
-.empty-box h3{
-    font-size:32px;
-    font-weight:800;
-}
-
-.empty-box p{
-    color:#cfcfcf !important;
-}
-
-</style>
-
-<div class="glow glow1"></div>
-<div class="glow glow2"></div>
-
-<div class="float-icon icon1">📋</div>
-<div class="float-icon icon2">🍽️</div>
-
-<div class="orders-header">
-    <h1 class="orders-title">📋 All Orders</h1>
-    <p class="orders-subtitle">Clean and professional restaurant order management system</p>
-</div>
-
-<div class="container">
-
-    <div class="table-box" data-aos="zoom-in">
-
-        {% if orders %}
-
-        <div class="table-responsive">
-
-            <table class="table custom-table align-middle">
-
-                <thead>
-                    <tr>
-                        <th>👤 Customer</th>
-                        <th>🍔 Item</th>
-                        <th>🔥 Quantity</th>
-                        <th>📅 Date</th>
-                        <th>⚡ Action</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    {% for order in orders %}
-
-                    <tr data-aos="fade-up" data-aos-delay="100">
-
-                        <td>{{ order.customer_name }}</td>
-                        <td>{{ order.item }}</td>
-
-                        <td>
-                            <span class="quantity-badge">
-                                x{{ order.quantity }}
-                            </span>
-                        </td>
-
-                        <td>{{ order.date }}</td>
-
-                        <td>
-                            <a href="/edit/{{ order.pk }}/" class="btn btn-warning action-btn me-2">
-                                Edit ✏️
-                            </a>
-
-                            <a href="/delete/{{ order.pk }}/" class="btn btn-danger action-btn">
-                                Delete 🗑️
-                            </a>
-                        </td>
-
-                    </tr>
-
-                    {% endfor %}
-
-                </tbody>
-
-            </table>
+            </div>
 
         </div>
-
-        {% else %}
-
-        <div class="empty-box">
-            <div style="font-size:80px;">📭</div>
-            <h3>No Orders Yet</h3>
-            <p>Orders will appear here automatically</p>
-        </div>
-
-        {% endif %}
-
     </div>
 
 </div>
-
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-
-<script>
-AOS.init({
-    duration:1000,
-    once:false,
-});
-</script>
 
 {% endblock %}
