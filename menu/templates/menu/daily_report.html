@@ -9,129 +9,165 @@
 
 <style>
 
-/* FORCE FULL VISIBILITY */
+/* ================= GLOBAL ================= */
 *{
     font-family:'Poppins',sans-serif;
-    color:#ffffff !important;
+    color:#ffffff;
 }
 
-/* BACKGROUND */
 body{
     background:
-    radial-gradient(circle at top right, rgba(255,140,0,.18), transparent 35%),
-    radial-gradient(circle at bottom left, rgba(255,0,80,.15), transparent 35%),
-    #070707;
+    radial-gradient(circle at top right, rgba(255,140,0,.22), transparent 40%),
+    radial-gradient(circle at bottom left, rgba(255,0,80,.18), transparent 40%),
+    #050505;
     overflow-x:hidden;
 }
 
-/* FIX ALL MUTED TEXT */
-p, span, td, th, h1, h2, h3, h4, h5, h6{
+/* FORCE READABILITY */
+h1,h2,h3,h4,h5,h6,p,span,td,th{
     color:#ffffff !important;
-    font-weight:600;
 }
 
-/* DATE FIX */
-.report-date{
-    color:#eaeaea !important;
+/* MUTED TEXT */
+.report-date,
+.report-label{
+    color:#d6d6d6 !important;
     font-weight:500;
 }
 
-/* TABLE TEXT FIX */
-.custom-table td,
-.custom-table th{
-    color:#ffffff !important;
-    font-weight:600;
+/* ================= SCROLLBAR ================= */
+::-webkit-scrollbar{
+    width:10px;
+}
+::-webkit-scrollbar-thumb{
+    background:linear-gradient(#ffb300,#ff0066);
+    border-radius:20px;
 }
 
-/* GLOW */
+/* ================= BACKGROUND GLOW ================= */
 .glow{
     position:fixed;
-    width:360px;
-    height:360px;
+    width:380px;
+    height:380px;
     border-radius:50%;
-    filter:blur(170px);
+    filter:blur(180px);
     opacity:.25;
     z-index:-1;
 }
 
-.orange{ background:#ff8800; top:-100px; right:-50px; }
-.pink{ background:#ff0055; left:-80px; bottom:-100px; }
+.orange{
+    background:#ff8a00;
+    top:-120px;
+    right:-60px;
+}
 
-/* HEADER */
+.pink{
+    background:#ff0066;
+    bottom:-120px;
+    left:-60px;
+}
+
+/* ================= HEADER ================= */
+.report-header{
+    padding:60px 0 30px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
 .report-title{
     font-size:64px;
     font-weight:900;
-    background:linear-gradient(90deg,#ffb300,#ff0055,#ffffff);
+    background:linear-gradient(90deg,#ffb300,#ff0066,#ffffff);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
 }
 
-/* CARDS */
-.report-card{
-    background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.12);
-    backdrop-filter:blur(18px);
-    border-radius:28px;
-    padding:30px;
+.home-btn{
+    padding:14px 28px;
+    border-radius:60px;
+    font-weight:700;
+    background:#1f1f1f;
+    color:#fff !important;
+    text-decoration:none;
+    transition:.3s;
 }
 
-/* NUMBERS MUST BE BIG + CLEAR */
+.home-btn:hover{
+    background:#2c2c2c;
+    transform:translateY(-3px);
+}
+
+/* ================= CARDS ================= */
+.report-card{
+    background:rgba(255,255,255,.06);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:28px;
+    padding:30px;
+    backdrop-filter:blur(18px);
+    transition:.3s;
+}
+
+.report-card:hover{
+    transform:translateY(-8px);
+}
+
 .report-number{
     font-size:42px;
     font-weight:900;
-    color:#ffffff !important;
 }
 
-/* LABEL FIX */
 .report-label{
-    color:#e6e6e6 !important;
-    font-weight:500;
+    font-size:14px;
+    color:#d6d6d6 !important;
 }
 
-/* GLASS BOX FIX */
+/* ================= GLASS BOX ================= */
 .glass-box{
     background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.15);
     border-radius:30px;
     padding:30px;
+    backdrop-filter:blur(20px);
 }
 
-/* SECTION TITLE FIX */
+/* ================= SECTION TITLE ================= */
 .section-title{
     font-size:24px;
     font-weight:800;
-    color:#ffffff !important;
+    margin-bottom:20px;
 }
 
-/* PAYMENT ROWS */
+/* ================= PAYMENT ================= */
 .payment-item{
     background:rgba(255,255,255,.08);
-    border-radius:15px;
-    padding:16px;
+    padding:16px 18px;
+    border-radius:14px;
     margin-bottom:12px;
     display:flex;
     justify-content:space-between;
 }
 
-/* AMOUNT */
 .payment-amount{
     color:#ffb300 !important;
     font-weight:800;
 }
 
-/* TABLE FIX (MOST IMPORTANT) */
+/* ================= TABLE ================= */
 .custom-table{
     width:100%;
+    color:#fff;
 }
 
 .custom-table thead{
-    background:linear-gradient(90deg,#ff0055,#ff9900);
+    background:linear-gradient(90deg,#ff0066,#ffb300);
 }
 
 .custom-table thead th{
-    color:white !important;
+    padding:18px;
     font-weight:900;
-    padding:16px;
+    color:#fff !important;
 }
 
 .custom-table tbody tr{
@@ -144,30 +180,38 @@ p, span, td, th, h1, h2, h3, h4, h5, h6{
 }
 
 .custom-table tbody td{
-    color:#ffffff !important;
+    padding:16px;
     font-weight:600;
-    padding:14px;
+    color:#fff !important;
 }
 
-/* EMPTY STATE */
+/* ================= PRINT BUTTON ================= */
+.print-btn{
+    margin-top:35px;
+    padding:16px 38px;
+    border:none;
+    border-radius:60px;
+    font-weight:800;
+    background:linear-gradient(90deg,#00c853,#00e676);
+    color:white;
+    transition:.3s;
+}
+
+.print-btn:hover{
+    transform:scale(1.05);
+}
+
+/* ================= EMPTY ================= */
 .empty-text{
     text-align:center;
     padding:50px;
-    color:#ffffff !important;
 }
 
-/* BUTTON */
-.home-btn{
-    background:#1f1f1f;
-    color:white !important;
-    padding:12px 24px;
-    border-radius:50px;
-    text-decoration:none;
-    font-weight:700;
-}
-
-.home-btn:hover{
-    background:#333;
+/* ================= RESPONSIVE ================= */
+@media(max-width:768px){
+    .report-title{
+        font-size:42px;
+    }
 }
 
 </style>
@@ -178,7 +222,7 @@ p, span, td, th, h1, h2, h3, h4, h5, h6{
 <div class="container">
 
     <!-- HEADER -->
-    <div class="report-header d-flex justify-content-between align-items-center flex-wrap">
+    <div class="report-header">
 
         <div>
             <h1 class="report-title">📊 Daily Report</h1>
@@ -222,54 +266,107 @@ p, span, td, th, h1, h2, h3, h4, h5, h6{
 
     </div>
 
-    <!-- TABLE -->
-    <div class="glass-box">
+    <!-- TABLE + PAYMENT -->
+    <div class="row">
 
-        <h3 class="section-title">📋 Today's Orders</h3>
+        <!-- PAYMENT -->
+        <div class="col-md-5 mb-4">
 
-        {% if today_orders %}
+            <div class="glass-box">
 
-        <table class="table custom-table">
+                <h3 class="section-title">💳 Payment Methods</h3>
 
-            <thead>
-                <tr>
-                    <th>Customer</th>
-                    <th>Table</th>
-                    <th>Waiter</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
+                <div class="payment-item">
+                    <span>💵 Cash</span>
+                    <span class="payment-amount">${{ cash_total }}</span>
+                </div>
 
-            <tbody>
+                <div class="payment-item">
+                    <span>📱 Zaad</span>
+                    <span class="payment-amount">${{ zaad_total }}</span>
+                </div>
 
-                {% for order in today_orders %}
+                <div class="payment-item">
+                    <span>📱 eDahab</span>
+                    <span class="payment-amount">${{ edahab_total }}</span>
+                </div>
 
-                <tr>
-                    <td>{{ order.customer_name }}</td>
-                    <td>{{ order.table }}</td>
-                    <td>{{ order.waiter }}</td>
-                    <td>${{ order.total_price }}</td>
-                </tr>
+                <div class="payment-item">
+                    <span>💳 Mastercard</span>
+                    <span class="payment-amount">${{ mastercard_total }}</span>
+                </div>
 
-                {% endfor %}
+            </div>
 
-            </tbody>
-
-        </table>
-
-        {% else %}
-
-        <div class="empty-text">
-            📭 No Orders Today Yet
         </div>
 
-        {% endif %}
+        <!-- ORDERS -->
+        <div class="col-md-7 mb-4">
 
+            <div class="glass-box">
+
+                <h3 class="section-title">📋 Today's Orders</h3>
+
+                {% if today_orders %}
+
+                <div style="max-height:400px; overflow-y:auto;">
+
+                    <table class="table custom-table">
+
+                        <thead>
+                            <tr>
+                                <th>Customer</th>
+                                <th>Table</th>
+                                <th>Waiter</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for order in today_orders %}
+
+                            <tr>
+                                <td>{{ order.customer_name }}</td>
+                                <td>{{ order.table }}</td>
+                                <td>{{ order.waiter }}</td>
+                                <td>${{ order.total_price }}</td>
+                            </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                {% else %}
+
+                <div class="empty-text">
+                    📭 No Orders Today Yet
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- PRINT -->
+    <div class="text-center">
+        <button onclick="window.print()" class="print-btn">
+            Print Report 🖨️
+        </button>
     </div>
 
 </div>
 
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script>AOS.init({duration:1000});</script>
+<script>
+AOS.init({ duration: 1000, once: false });
+</script>
 
 {% endblock %}

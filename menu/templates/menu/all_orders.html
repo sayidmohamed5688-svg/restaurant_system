@@ -4,158 +4,141 @@
 
 {% block content %}
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
 
 <style>
 
+/* GLOBAL */
 *{
     font-family:'Poppins',sans-serif;
-}
-
-/* FIX: better contrast background */
-body{
-    background:
-    radial-gradient(circle at top right, rgba(255,140,0,.20), transparent 35%),
-    radial-gradient(circle at bottom left, rgba(255,0,80,.18), transparent 35%),
-    #070707;
-    overflow-x:hidden;
     color:#ffffff;
 }
 
-/* STRONG TEXT FIX */
-h1,h2,h3,h4,h5,h6,p,td,th,span{
+body{
+    background:
+    radial-gradient(circle at top left, rgba(255,140,0,.20), transparent 45%),
+    radial-gradient(circle at bottom right, rgba(255,0,100,.18), transparent 45%),
+    #0a0a0a;
+    overflow-x:hidden;
+}
+
+/* FORCE VISIBILITY */
+h1,h2,h3,h4,h5,h6,p,span,td,th,a{
     color:#ffffff !important;
-    font-weight:600;
 }
 
-/* DATE FIX */
-.date-text{
-    color:#e0e0e0 !important;
-    font-weight:500;
-}
-
-/* SCROLLBAR */
-::-webkit-scrollbar{ width:10px; }
-::-webkit-scrollbar-thumb{
-    background:linear-gradient(#ff9500,#ff0055);
-    border-radius:20px;
-}
-
-/* GLOW */
+/* BACK GLOW */
 .glow{
     position:fixed;
-    width:360px;
-    height:360px;
+    width:350px;
+    height:350px;
     border-radius:50%;
-    filter:blur(170px);
+    filter:blur(160px);
     opacity:.25;
     z-index:-1;
-    animation:moveGlow 10s infinite alternate ease-in-out;
 }
 
-.glow.orange{ background:#ff8800; top:-80px; right:-50px; }
-.glow.pink{ background:#ff0055; bottom:-80px; left:-50px; animation-delay:2s; }
+.glow1{
+    background:#ff8800;
+    top:-120px;
+    right:-80px;
+}
 
-@keyframes moveGlow{
-    from{ transform:translateY(-30px); }
-    to{ transform:translateY(30px); }
+.glow2{
+    background:#ff0066;
+    bottom:-120px;
+    left:-80px;
+}
+
+/* FLOAT ICONS */
+.float-icon{
+    position:fixed;
+    font-size:42px;
+    opacity:.10;
+    z-index:-1;
+    animation:float 6s infinite ease-in-out;
+}
+
+.icon1{ top:18%; left:5%; }
+.icon2{ bottom:18%; right:5%; animation-delay:2s; }
+
+@keyframes float{
+    0%{transform:translateY(0);}
+    50%{transform:translateY(-20px);}
+    100%{transform:translateY(0);}
 }
 
 /* HEADER */
 .orders-header{
     text-align:center;
-    padding:70px 0 40px;
+    padding:60px 20px 30px;
 }
 
 .orders-title{
-    font-size:70px;
+    font-size:64px;
     font-weight:900;
-    background:linear-gradient(90deg,#ffb300,#ff0055,#ffffff);
+    background:linear-gradient(90deg,#ffb300,#ff0066,#ffffff);
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
-    text-shadow:0 0 30px rgba(255,100,0,.3);
 }
 
 .orders-subtitle{
-    color:#d6d6d6;
-    font-size:20px;
+    color:#d0d0d0 !important;
+    font-size:18px;
     font-weight:500;
 }
 
-/* TABLE */
-.orders-wrapper{
+/* TABLE CONTAINER */
+.table-box{
     background:rgba(255,255,255,.06);
-    border:1px solid rgba(255,255,255,.12);
-    backdrop-filter:blur(20px);
-    border-radius:30px;
+    border:1px solid rgba(255,255,255,.15);
+    backdrop-filter:blur(18px);
+    border-radius:28px;
     overflow:hidden;
-    box-shadow:0 25px 70px rgba(0,0,0,.6);
+    box-shadow:0 25px 60px rgba(0,0,0,.6);
 }
 
-/* HEADER TABLE */
-.orders-table thead{
-    background:linear-gradient(90deg,#ff0055,#ff9900);
+/* TABLE */
+.custom-table{
+    width:100%;
+    color:#fff;
 }
 
-.orders-table thead th{
-    padding:22px;
-    font-size:16px;
-    font-weight:800;
-    color:#ffffff !important;
+.custom-table thead{
+    background:linear-gradient(90deg,#ff0066,#ffb300);
+}
+
+.custom-table thead th{
+    padding:18px;
+    font-weight:900;
+    color:#fff;
+    text-align:left;
 }
 
 /* ROWS */
-.orders-table tbody tr{
+.custom-table tbody tr{
+    background:rgba(255,255,255,.02);
     transition:.3s ease;
-    border-bottom:1px solid rgba(255,255,255,.08);
 }
 
-.orders-table tbody tr:hover{
-    background:rgba(255,255,255,.08);
-    transform:scale(1.01);
+.custom-table tbody tr:hover{
+    background:rgba(255,255,255,.12);
 }
 
-.orders-table tbody td{
-    padding:22px;
-    font-size:15px;
-    font-weight:600;
-    color:#ffffff !important;
-}
-
-/* CUSTOMER */
-.customer-box{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-
-.customer-avatar{
-    width:45px;
-    height:45px;
-    border-radius:50%;
-    background:linear-gradient(135deg,#ff9900,#ff0055);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-weight:800;
-    color:white;
-}
-
-/* ITEM */
-.item-pill{
-    background:rgba(255,255,255,.10);
-    padding:8px 14px;
-    border-radius:30px;
+/* CELLS */
+.custom-table tbody td{
+    padding:18px;
     font-weight:600;
 }
 
-/* QUANTITY */
+/* BADGE */
 .quantity-badge{
-    background:linear-gradient(90deg,#ff9900,#ff0055);
-    padding:8px 14px;
+    background:linear-gradient(90deg,#ffb300,#ff0066);
+    padding:7px 14px;
     border-radius:30px;
     font-weight:800;
+    color:#fff;
 }
 
 /* BUTTONS */
@@ -164,7 +147,7 @@ h1,h2,h3,h4,h5,h6,p,td,th,span{
     border-radius:50px;
     padding:10px 16px;
     font-weight:700;
-    transition:.3s ease;
+    transition:.3s;
 }
 
 .action-btn:hover{
@@ -178,49 +161,36 @@ h1,h2,h3,h4,h5,h6,p,td,th,span{
 }
 
 .empty-box h3{
-    font-size:34px;
+    font-size:32px;
     font-weight:800;
 }
 
 .empty-box p{
-    color:#cfcfcf;
+    color:#cfcfcf !important;
 }
-
-/* FLOAT */
-.float-icon{
-    position:fixed;
-    font-size:40px;
-    opacity:.12;
-    z-index:-1;
-}
-
-.icon1{ top:20%; left:5%; }
-.icon2{ bottom:15%; right:6%; }
 
 </style>
 
-<div class="glow orange"></div>
-<div class="glow pink"></div>
+<div class="glow glow1"></div>
+<div class="glow glow2"></div>
 
 <div class="float-icon icon1">📋</div>
 <div class="float-icon icon2">🍽️</div>
 
 <div class="orders-header">
-
     <h1 class="orders-title">📋 All Orders</h1>
-    <p class="orders-subtitle">Professional restaurant order management dashboard</p>
-
+    <p class="orders-subtitle">Clean and professional restaurant order management system</p>
 </div>
 
 <div class="container">
 
-    <div class="orders-wrapper" data-aos="zoom-in">
+    <div class="table-box" data-aos="zoom-in">
 
         {% if orders %}
 
         <div class="table-responsive">
 
-            <table class="table orders-table">
+            <table class="table custom-table align-middle">
 
                 <thead>
                     <tr>
@@ -228,7 +198,7 @@ h1,h2,h3,h4,h5,h6,p,td,th,span{
                         <th>🍔 Item</th>
                         <th>🔥 Quantity</th>
                         <th>📅 Date</th>
-                        <th>⚡ Actions</th>
+                        <th>⚡ Action</th>
                     </tr>
                 </thead>
 
@@ -236,26 +206,27 @@ h1,h2,h3,h4,h5,h6,p,td,th,span{
 
                     {% for order in orders %}
 
-                    <tr data-aos="fade-up">
+                    <tr data-aos="fade-up" data-aos-delay="100">
+
+                        <td>{{ order.customer_name }}</td>
+                        <td>{{ order.item }}</td>
 
                         <td>
-                            <div class="customer-box">
-                                <div class="customer-avatar">
-                                    {{ order.customer_name|slice:":1" }}
-                                </div>
-                                <div>{{ order.customer_name }}</div>
-                            </div>
+                            <span class="quantity-badge">
+                                x{{ order.quantity }}
+                            </span>
                         </td>
 
-                        <td><span class="item-pill">{{ order.item }}</span></td>
-
-                        <td><span class="quantity-badge">x{{ order.quantity }}</span></td>
-
-                        <td class="date-text">{{ order.date }}</td>
+                        <td>{{ order.date }}</td>
 
                         <td>
-                            <a href="/edit/{{ order.pk }}/" class="btn btn-warning action-btn me-2">Edit ✏️</a>
-                            <a href="/delete/{{ order.pk }}/" class="btn btn-danger action-btn">Delete 🗑️</a>
+                            <a href="/edit/{{ order.pk }}/" class="btn btn-warning action-btn me-2">
+                                Edit ✏️
+                            </a>
+
+                            <a href="/delete/{{ order.pk }}/" class="btn btn-danger action-btn">
+                                Delete 🗑️
+                            </a>
                         </td>
 
                     </tr>
@@ -271,11 +242,9 @@ h1,h2,h3,h4,h5,h6,p,td,th,span{
         {% else %}
 
         <div class="empty-box">
-
             <div style="font-size:80px;">📭</div>
             <h3>No Orders Yet</h3>
-            <p>Customer orders will appear here.</p>
-
+            <p>Orders will appear here automatically</p>
         </div>
 
         {% endif %}
@@ -287,7 +256,10 @@ h1,h2,h3,h4,h5,h6,p,td,th,span{
 <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 
 <script>
-AOS.init({ duration: 1000, once: false });
+AOS.init({
+    duration:1000,
+    once:false,
+});
 </script>
 
 {% endblock %}
