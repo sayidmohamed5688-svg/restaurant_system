@@ -24,4 +24,7 @@ urlpatterns = [
     path('report/', views.daily_report, name='daily_report'),
     path('item-finished/<int:item_id>/', views.mark_item_finished, name='mark_item_finished'),
     path('reset-menu/', views.reset_menu, name='reset_menu'),
+    path('debts/', views.debt_list, name='debt_list'),
+    path('debts/add/', views.add_debt, name='add_debt'),
+    path('debts/paid/<int:debt_id>/', views.mark_debt_paid, name='mark_debt_paid'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

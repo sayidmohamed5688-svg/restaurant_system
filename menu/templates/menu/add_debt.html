@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Debt{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+<div class="col-md-6">
+
+<h2 class="page-title mb-4">💳 Add Customer Debt</h2>
+
+<div class="card p-4">
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label class="fw-bold mb-2">Customer Name</label>
+            <input type="text" class="form-control" name="customer_name" placeholder="Enter customer name" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="fw-bold mb-2">Phone Number</label>
+            <input type="text" class="form-control" name="phone" placeholder="Enter phone number">
+        </div>
+
+        <div class="mb-3">
+            <label class="fw-bold mb-2">Amount Owed ($)</label>
+            <input type="number" class="form-control" name="amount" placeholder="0.00" step="0.01" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="fw-bold mb-2">Description</label>
+            <textarea class="form-control" name="description" rows="3" placeholder="What did they order?"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="fw-bold mb-2">Waiter</label>
+            <select class="form-select" name="waiter_id">
+                {% for waiter in waiters %}
+                <option value="{{ waiter.id }}">{{ waiter.username }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary flex-grow-1">
+                Save Debt 💾
+            </button>
+            <a href="/debts/" class="btn btn-dark">Cancel</a>
+        </div>
+    </form>
+</div>
+
+</div>
+</div>
+
+{% endblock %}
