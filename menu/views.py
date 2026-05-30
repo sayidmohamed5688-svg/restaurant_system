@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Order, MenuItem, Category, Table, OrderItem
+from django.db.models import Sum
+from .models import Order, MenuItem, Category, Table, OrderItem, CustomerDebt
 
 
 def home(request):
@@ -181,3 +183,37 @@ def mark_item_finished(request, item_id):
 def reset_menu(request):
     MenuItem.objects.all().update(available=True, daily_sold=0)
     return redirect('/')
+
+def debt_list(request):
+    debts = CustomerDebt.objects.all().order_by('-date')
+    total_unpaid = debts.filter(is_paid=False).aggregate(
+        Sum('amount'))['amount__sum'] or 0
+    return render(request, 'menu/debt_list.html', {
+        'debts': debts,
+        'total_unpaid': total_unpaid
+    })
+
+def add_debt(request):
+    from django.contrib.auth.models import User
+    waiters = User.objects.filter(
+        username__in=['gadhyac', 'faro', 'sakriye',
+                      'cabdi_xasan', 'shine', 'sakariye_mxmed']
+    )
+    if request.method == 'POST':
+        CustomerDebt.objects.create(
+            customer_name=request.POST.get('customer_name'),
+            phone=request.POST.get('phone', ''),
+            amount=request.POST.get('amount'),
+            description=request.POST.get('description', ''),
+            waiter_id=request.POST.get('waiter_id')
+        )
+        return redirect('debt_list')
+    return render(request, 'menu/add_debt.html', {'waiters': waiters})
+
+def mark_debt_paid(request, debt_id):
+    from django.utils import timezone
+    debt = CustomerDebt.objects.get(id=debt_id)
+    debt.is_paid = True
+    debt.paid_date = timezone.now()
+    debt.save()
+    return redirect('debt_list')

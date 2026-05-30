@@ -73,3 +73,20 @@ class OrderItem(models.Model):
     
       def subtotal(self):
         return self.price * self.quantity
+      
+
+class CustomerDebt(models.Model):
+    customer_name = models.CharField(max_length=100)
+    phone = models.CharField(max_length=20, blank=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    description = models.TextField(blank=True)
+    date = models.DateTimeField(auto_now_add=True)
+    is_paid = models.BooleanField(default=False)
+    paid_date = models.DateTimeField(null=True, blank=True)
+    waiter = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        status = "Paid ✅" if self.is_paid else "Unpaid ❌"
+        return f"{self.customer_name} — ${self.amount} — {status}"
+    
+
