@@ -90,3 +90,30 @@ class CustomerDebt(models.Model):
         return f"{self.customer_name} — ${self.amount} — {status}"
     
 
+class InventoryItem(models.Model):
+    UNIT_CHOICES = [
+        ('kg', 'Kilogram'),
+        ('g', 'Gram'),
+        ('L', 'Liter'),
+        ('ml', 'Milliliter'),
+        ('piece', 'Piece'),
+        ('box', 'Box'),
+        ('bag', 'Bag'),
+    ]
+
+    name = models.CharField(max_length=100)
+    unit = models.CharField(max_length=20, choices=UNIT_CHOICES, default='kg')
+    quantity = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    price_per_unit = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    low_stock_alert = models.DecimalField(max_digits=10, decimal_places=2, default=5)
+    last_updated = models.DateTimeField(auto_now=True)
+
+    def total_value(self):
+        return self.quantity * self.price_per_unit
+
+    def is_low_stock(self):
+        return self.quantity <= self.low_stock_alert
+
+    def __str__(self):
+        return f"{self.name} — {self.quantity} {self.unit}"
+

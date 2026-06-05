@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import Order, MenuItem, Category, Table, OrderItem
 from django.db.models import Sum
-from .models import Order, MenuItem, Category, Table, OrderItem, CustomerDebt
+from .models import Order, MenuItem, Category, Table, OrderItem, CustomerDebt, InventoryItem
 
 
 def home(request):
@@ -217,3 +217,34 @@ def mark_debt_paid(request, debt_id):
     debt.paid_date = timezone.now()
     debt.save()
     return redirect('debt_list')
+
+def inventory(request):
+    items = InventoryItem.objects.all().order_by('name')
+    total_value = sum(item.total_value() for item in items)
+    low_stock = [item for item in items if item.is_low_stock()]
+    return render(request, 'menu/inventory.html', {
+        'items': items,
+        'total_value': total_value,
+        'low_stock': low_stock
+    })
+
+def add_inventory(request):
+    if request.method == 'POST':
+        InventoryItem.objects.create(
+            name=request.POST.get('name'),
+            unit=request.POST.get('unit'),
+            quantity=request.POST.get('quantity'),
+            price_per_unit=request.POST.get('price_per_unit'),
+            low_stock_alert=request.POST.get('low_stock_alert', 5)
+        )
+        return redirect('inventory')
+    return render(request, 'menu/add_inventory.html')
+
+def update_inventory(request, item_id):
+    item = InventoryItem.objects.get(id=item_id)
+    if request.method == 'POST':
+        item.quantity = request.POST.get('quantity')
+        item.price_per_unit = request.POST.get('price_per_unit')
+        item.save()
+        return redirect('inventory')
+    return render(request, 'menu/update_inventory.html', {'item': item})
