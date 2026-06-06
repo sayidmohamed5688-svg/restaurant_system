@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+{% block title %}Inventory{% endblock %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2 class="page-title mb-0">📦 Inventory</h2>
+        <p class="text-muted">Track your stock</p>
+    </div>
+    <a href="/inventory/add/" class="btn btn-primary">+ Add Item</a>
+</div>
+
+<!-- Summary -->
+<div class="row mb-4">
+    <div class="col-md-4 mb-3">
+        <div class="card p-4 text-center" style="border-left: 4px solid #27ae60;">
+            <h2 style="color:#27ae60;">${{ total_value }}</h2>
+            <p class="text-muted mb-0">Total Stock Value</p>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card p-4 text-center" style="border-left: 4px solid #3498db;">
+            <h2 style="color:#3498db;">{{ items|length }}</h2>
+            <p class="text-muted mb-0">Total Items</p>
+        </div>
+    </div>
+    <div class="col-md-4 mb-3">
+        <div class="card p-4 text-center" style="border-left: 4px solid #c0392b;">
+            <h2 style="color:#c0392b;">{{ low_stock|length }}</h2>
+            <p class="text-muted mb-0">Low Stock Alert ⚠️</p>
+        </div>
+    </div>
+</div>
+
+<!-- Low Stock Alert -->
+{% if low_stock %}
+<div class="card p-3 mb-4" style="border-left: 4px solid #c0392b; background:#fff5f5;">
+    <h6 style="color:#c0392b;">⚠️ Low Stock Items!</h6>
+    {% for item in low_stock %}
+    <span class="badge me-2" style="background:#c0392b;">{{ item.name }} — {{ item.quantity }} {{ item.unit }}</span>
+    {% endfor %}
+</div>
+{% endif %}
+
+<!-- Inventory Table -->
+<div class="card p-4">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Quantity</th>
+                <th>Unit</th>
+                <th>Price/Unit</th>
+                <th>Total Value</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td><strong>{{ item.name }}</strong></td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.unit }}</td>
+                <td>${{ item.price_per_unit }}</td>
+                <td style="color:#27ae60; font-weight:600;">${{ item.total_value }}</td>
+                <td>
+                    {% if item.is_low_stock %}
+                    <span style="background:#c0392b; color:white; padding:4px 12px; border-radius:20px; font-size:12px;">
+                        Low ⚠️
+                    </span>
+                    {% else %}
+                    <span style="background:#27ae60; color:white; padding:4px 12px; border-radius:20px; font-size:12px;">
+                        OK ✅
+                    </span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="/inventory/update/{{ item.id }}/" class="btn btn-warning btn-sm">
+                        Update
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="mt-3">
+    <a href="/" class="btn btn-dark">← Home</a>
+</div>
+
+{% endblock %}
