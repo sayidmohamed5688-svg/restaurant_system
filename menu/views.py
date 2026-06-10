@@ -248,3 +248,45 @@ def update_inventory(request, item_id):
         item.save()
         return redirect('inventory')
     return render(request, 'menu/update_inventory.html', {'item': item})
+
+def end_of_day(request):
+    from django.utils import timezone
+    from django.db.models import Sum
+    from django.contrib.auth.models import User
+
+    today = timezone.now().date()
+    today_orders = Order.objects.filter(date__date=today)
+
+    # Total by payment
+    cash = today_orders.filter(payment_method='cash').aggregate(Sum('total_price'))['total_price__sum'] or 0
+    zaad = today_orders.filter(payment_method='zaad').aggregate(Sum('total_price'))['total_price__sum'] or 0
+    edahab = today_orders.filter(payment_method='edahab').aggregate(Sum('total_price'))['total_price__sum'] or 0
+    mastercard = today_orders.filter(payment_method='mastercard').aggregate(Sum('total_price'))['total_price__sum'] or 0
+    grand_total = today_orders.aggregate(Sum('total_price'))['total_price__sum'] or 0
+
+    # Total by waiter
+    waiters = User.objects.filter(
+        username__in=['gadhyac', 'faro', 'sakriye',
+                      'cabdi_xasan', 'shine', 'sakariye_mxmed']
+    )
+    waiter_totals = []
+    for waiter in waiters:
+        waiter_orders = today_orders.filter(waiter=waiter)
+        waiter_total = waiter_orders.aggregate(Sum('total_price'))['total_price__sum'] or 0
+        waiter_totals.append({
+            'name': waiter.username,
+            'orders': waiter_orders.count(),
+            'total': waiter_total
+        })
+
+    return render(request, 'menu/end_of_day.html', {
+        'today': today,
+        'today_orders': today_orders,
+        'cash': cash,
+        'zaad': zaad,
+        'edahab': edahab,
+        'mastercard': mastercard,
+        'grand_total': grand_total,
+        'waiter_totals': waiter_totals,
+        'total_orders': today_orders.count(),
+    })
